@@ -1,22 +1,18 @@
 import React from 'react';
 import classes from './Profile.module.css';
-import MyPosts from './MyPosts/MyPosts';
+import {MyPosts} from './MyPosts/MyPosts';
+import {ProfileInfo} from './ProfileInfo/ProfileInfo';
+import {postType} from '../../App';
 
+type ProfileType = {
+    postData: Array<postType>
+}
 
-function Profile() {
+export function Profile({postData}: ProfileType) {
     return (
         <div>
-            <div>
-                <img className={classes.img}
-                    src="https://media-exp1.licdn.com/dms/image/C4D1BAQGDmALg_8s-Yg/company-background_10000/0/1519799119530?e=2147483647&v=beta&t=MpzHeo7wdMoePy-CjWNPwwMbgDU3ydtdqIXGYFtSisg"
-                    alt=""/>
-            </div>
-            <div>
-                ava + descr
-            </div>
-            <MyPosts/>
+            <ProfileInfo/>
+            <MyPosts postData={postData}/>
         </div>
     );
 }
-
-export default Profile;

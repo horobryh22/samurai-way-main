@@ -1,0 +1,42 @@
+.dialogs {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 6fr;
+}
+
+.dialog__items {
+
+}
+
+.dialog__title {
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+
+.dialog__items .dialog {
+    margin-bottom: 10px;
+}
+
+.dialog__items .dialog a {
+    text-decoration: none;
+    color: black;
+}
+
+.dialog__items .dialog a.active {
+    color: gold;
+}
+
+.messages {
+
+}
+
+.messages .message {
+
+}
+
+.messages__title {
+    font-size: 17px;
+    margin-bottom: 10px;
+}

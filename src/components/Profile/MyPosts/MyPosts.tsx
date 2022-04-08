@@ -1,19 +1,27 @@
 import React from 'react';
 import classes from './MyPosts.module.css';
-import Post from './Post/Post';
+import {Post} from './Post/Post';
+import {postType} from '../../../App';
 
 
-function MyPosts() {
+type MyPostsType = {
+    postData: Array<postType>
+}
+
+export function MyPosts({postData}: MyPostsType) {
+
     return (
-        <div className={classes.posts}>
-            My post
+        <div className={classes.postsBlock}>
+            <h3>My post</h3>
             <div>
-                New Posts
-                <Post message = 'Tell me how are you friends?' likes={10}/>
-                <Post message = 'Hello, it is my first post' likes={15}/>
+                <textarea></textarea>
+                <div>
+                    <button>Add post</button>
+                </div>
+            </div>
+            <div className={classes.posts}>
+                {postData.map(p => <Post message={p.post} likes={p.likes}/>)}
             </div>
         </div>
     );
 }
-
-export default MyPosts;

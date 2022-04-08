@@ -6,7 +6,7 @@ type PostPropsType = {
     likes: number
 }
 
-function Post({message, likes}: PostPropsType) {
+export function Post({message, likes}: PostPropsType) {
     return (
         <div className={classes.item}>
             <img src="http://archilab.online/images/1/123.jpg" alt=""/>
@@ -18,5 +18,3 @@ function Post({message, likes}: PostPropsType) {
         </div>
     );
 }
-
-export default Post;
