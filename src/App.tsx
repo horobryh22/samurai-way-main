@@ -20,25 +20,38 @@ export type messageType = {
 export type dialogType = {
     id: number
     name: string
+    avatar: string
+}
+
+export type navElementType = {
+    navElement: string
+    to: string
 }
 
 type AppType = {
-    postData: Array<postType>
-    dialogsData: Array<dialogType>
-    messagesData: Array<messageType>
+    state: {
+        profilePage: {
+            postData: Array<postType>
+        }
+        dialogsPage: {
+            dialogsData: Array<dialogType>
+            messagesData: Array<messageType>
+        },
+        navbar: Array<navElementType>
+    }
 }
 
-function App({postData, dialogsData, messagesData}: AppType) {
+function App({state}: AppType) {
 
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar/>
+                <Navbar state={state.navbar}/>
                 <div className="app-wrapper-content">
-                    <Route path="/dialogs" render={() => <Dialogs dialogsData={dialogsData} messagesData={messagesData}/>}/>
                     <Route path="/profile" render={() => <Profile
-                        postData={postData}/>}/> {/*заменили атрибут component на render, для того, чтобы можно было прокинуть props.*/}
+                        state={state.profilePage}/>}/> {/*заменили атрибут component на render, для того, чтобы можно было прокинуть props.*/}
+                    <Route path="/dialogs" render={() => <Dialogs state={state.dialogsPage}/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}

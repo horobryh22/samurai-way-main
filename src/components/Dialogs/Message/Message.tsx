@@ -1,4 +1,4 @@
-import classes from '../Dialogs.module.css';
+import classes from './Message.module.css';
 import React from 'react';
 
 type MessageType = {

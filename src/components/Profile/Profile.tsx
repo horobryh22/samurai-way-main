@@ -5,14 +5,16 @@ import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {postType} from '../../App';
 
 type ProfileType = {
-    postData: Array<postType>
+    state: {
+        postData: Array<postType>
+    }
 }
 
-export function Profile({postData}: ProfileType) {
+export function Profile({state}: ProfileType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts postData={postData}/>
+            <MyPosts postData={state.postData}/>
         </div>
     );
 }
