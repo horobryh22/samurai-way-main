@@ -1,48 +1,28 @@
 import React from 'react';
 import './App.css';
 import {Header} from './components/Header/Header';
-import {Navbar} from './components/Navbar/Navbar';
+import {Navbar, NavElementType} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
-
-export type postType = {
-    id: number
-    post: string
-    likes: number
-}
-
-export type messageType = {
-    id: number
-    message: string
-}
-
-export type dialogType = {
-    id: number
-    name: string
-    avatar: string
-}
-
-export type navElementType = {
-    navElement: string
-    to: string
-}
+import {MessageType} from './components/Dialogs/Message/Message';
+import {PostType} from './components/Profile/MyPosts/Post/Post';
+import {DialogItemType} from './components/Dialogs/DialogItem/DialogItem';
 
 type AppType = {
     state: {
         profilePage: {
-            postData: Array<postType>
+            posts: Array<PostType>
         }
         dialogsPage: {
-            dialogsData: Array<dialogType>
-            messagesData: Array<messageType>
+            dialogs: Array<DialogItemType>
+            messages: Array<MessageType>
         },
-        navbar: Array<navElementType>
+        navbar: Array<NavElementType>
     }
 }
 
 function App({state}: AppType) {
-
     return (
         <BrowserRouter>
             <div className="app-wrapper">

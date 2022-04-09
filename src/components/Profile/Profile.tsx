@@ -1,12 +1,12 @@
 import React from 'react';
-import classes from './Profile.module.css';
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {postType} from '../../App';
+import {PostType} from './MyPosts/Post/Post';
+
 
 type ProfileType = {
     state: {
-        postData: Array<postType>
+        posts: Array<PostType>
     }
 }
 
@@ -14,7 +14,7 @@ export function Profile({state}: ProfileType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts postData={state.postData}/>
+            <MyPosts postData={state.posts}/>
         </div>
     );
 }

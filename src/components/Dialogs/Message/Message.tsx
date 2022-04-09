@@ -1,12 +1,13 @@
 import classes from './Message.module.css';
 import React from 'react';
 
-type MessageType = {
+export type MessageType = {
+    id: number
     message: string
 }
 
-export function Message({message}: MessageType) {
+export function Message({message, id}: MessageType) {
     return (
-        <div className={classes.message}>{message}</div>
+        <div key={id} className={classes.message}>{message}</div>
     )
 }

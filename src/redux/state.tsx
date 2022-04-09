@@ -1,12 +1,28 @@
-export const state = {
+import {MessageType} from '../components/Dialogs/Message/Message';
+import {PostType} from '../components/Profile/MyPosts/Post/Post';
+import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
+import {NavElementType} from '../components/Navbar/Navbar';
+
+type StateType = {
     profilePage: {
-        postData: [
+        posts: Array<PostType>
+    },
+    dialogsPage: {
+        dialogs: Array<DialogItemType>,
+        messages: Array<MessageType>
+    },
+    navbar: Array<NavElementType>
+}
+
+export const state: StateType = {
+    profilePage: {
+        posts: [
             {id: 1, post: 'Tell me how are you friends?', likes: 10},
-            {id: 2, post: 'Hello, it is my first post', likes: 15}
+            {id: 2, post: 'Hello, it is my first posts', likes: 15}
         ],
     },
     dialogsPage: {
-        dialogsData: [
+        dialogs: [
             {
                 id: 1,
                 name: 'Ilya',
@@ -38,7 +54,7 @@ export const state = {
                 avatar: 'https://avatars.mds.yandex.net/i?id=dff8a0b76910b049f55c6f118f3e3581_l-5663611-images-thumbs&ref=rim&n=13&w=640&h=640'
             },
         ],
-        messagesData: [
+        messages: [
             {id: 1, message: 'Hello'},
             {id: 2, message: 'How are you?'},
             {id: 3, message: 'Nice to meet you'},

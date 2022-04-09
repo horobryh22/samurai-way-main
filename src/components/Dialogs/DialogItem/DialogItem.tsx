@@ -2,13 +2,13 @@ import classes from './DialogItem.module.css';
 import {NavLink} from 'react-router-dom';
 import React from 'react';
 
-type DialogItemType = {
+export type DialogItemType = {
     id: number
     name: string
     avatar: string
 }
 
-export function DialogItem({name, id, avatar}: DialogItemType) {
+export function DialogItem({id, name, avatar}: DialogItemType) {
     return (
         <div className={classes.dialog}>
             <div className={classes.avatar}>
