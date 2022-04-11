@@ -7,14 +7,14 @@ import {ProfilePageType} from '../../redux/state';
 type ProfileType = {
     profilePage:ProfilePageType
     addPost: (messagePost:string) => void
-    changeValueTextarea: (value: string) => void
+    changeValueTextareaPost: (value: string) => void
 }
 
-export const Profile: React.FC<ProfileType> = ({profilePage, addPost, changeValueTextarea}) => {
+export const Profile: React.FC<ProfileType> = ({profilePage, addPost, changeValueTextareaPost}) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts postData={profilePage.posts} textareaValue = {profilePage.textareaValue} addPost={addPost} changeValueTextarea={changeValueTextarea}/>
+            <MyPosts postData={profilePage.posts} textareaValue = {profilePage.textareaValue} addPost={addPost} changeValueTextareaPost={changeValueTextareaPost}/>
         </div>
     );
 }

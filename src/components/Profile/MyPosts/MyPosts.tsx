@@ -6,26 +6,24 @@ import {Post, PostType} from './Post/Post';
 type MyPostsPropsType = {
     postData: Array<PostType>
     addPost: (messagePost: string) => void
-    changeValueTextarea: (value: string) => void
+    changeValueTextareaPost: (value: string) => void
     textareaValue: string
 }
 
-export const MyPosts: React.FC<MyPostsPropsType> = ({postData, addPost, changeValueTextarea, textareaValue}) => {
+export const MyPosts: React.FC<MyPostsPropsType> = ({postData, addPost, changeValueTextareaPost, textareaValue}) => {
 
     const posts = postData.map(p => <Post key={p.id} post={p.post} likes={p.likes} id={p.id}/>);
 
     const newPostElement: LegacyRef<HTMLTextAreaElement> = React.createRef();
 
     const onClickButtonHandler = (): void => {
-        if (newPostElement.current) {;
-            addPost(textareaValue);
-        }
+        addPost(textareaValue);
     }
 
     const onChangeTextareaHandler = (): void => {
         if (newPostElement.current) {
             const value = newPostElement.current.value;
-            changeValueTextarea(value);
+            changeValueTextareaPost(value);
         }
     }
 

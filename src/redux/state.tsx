@@ -9,8 +9,9 @@ export type ProfilePageType = {
     textareaValue: string
 }
 export type DialogsPageType = {
-    dialogs: Array<DialogItemType>,
+    dialogs: Array<DialogItemType>
     messages: Array<MessageType>
+    textareaValue: string
 }
 export type StateType = {
     profilePage: ProfilePageType,
@@ -64,7 +65,8 @@ export const state: StateType = {
             {id: 2, message: 'How are you?'},
             {id: 3, message: 'Nice to meet you'},
             {id: 4, message: 'Where are you from?'}
-        ]
+        ],
+        textareaValue: ''
     },
     navbar: [
         {navElement: 'Profile', to: '/profile', id: 1},
@@ -87,9 +89,22 @@ export const addPost = (messagePost: string): void => {
     rerenderEntireTree(state);
 }
 
-export const changeValueTextarea = (value: string): void => {
+export const changeValueTextareaPost = (value: string): void => {
     state.profilePage.textareaValue = value;
     rerenderEntireTree(state);
 }
 
+export const sendMessage = (textMessage: string): void => {
+    const newMessage = {
+        id: 5,
+        message: textMessage
+    }
+    state.dialogsPage.messages.push(newMessage);
+    state.dialogsPage.textareaValue = ''; // обнулили наше значение value после отправки сообщения
+    rerenderEntireTree(state);
+}
 
+export const changeValueTextareaMessage = (value: string): void => {
+    state.dialogsPage.textareaValue = value;
+    rerenderEntireTree(state);
+}
