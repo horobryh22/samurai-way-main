@@ -8,7 +8,7 @@ export type DialogItemType = {
     avatar: string
 }
 
-export function DialogItem({id, name, avatar}: DialogItemType) {
+export const DialogItem: React.FC<DialogItemType> = ({id, name, avatar}) => {
     return (
         <div className={classes.dialog}>
             <div className={classes.avatar}>

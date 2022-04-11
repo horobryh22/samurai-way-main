@@ -7,15 +7,16 @@ export type NavbarType = {
 }
 
 export type NavElementType = {
+    id: number
     navElement: string
     to: string
 }
 
-export function Navbar({state}: NavbarType) {
+export const Navbar: React.FC<NavbarType> = ({state}) => {
     return (
         <nav className={classes.nav}>
-            {state.map((navElement) => (
-                <div className={classes.item}>
+            {state.map((navElement, i) => (
+                <div key={navElement.id} className={classes.item}>
                     <NavLink to={`${navElement.to}`} activeClassName={classes.active}>{navElement.navElement}</NavLink>
                 </div>
             ))}

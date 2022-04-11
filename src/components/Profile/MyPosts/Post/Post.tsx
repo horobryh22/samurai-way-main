@@ -7,7 +7,7 @@ export type PostType = {
     likes: number
 }
 
-export function Post({post, likes, id}: PostType) {
+export const Post: React.FC<PostType> = ({post, likes, id}) => {
     return (
         <div key={id} className={classes.item}>
             <img src="http://archilab.online/images/1/123.jpg" alt=""/>

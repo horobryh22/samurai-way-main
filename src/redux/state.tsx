@@ -2,15 +2,18 @@ import {MessageType} from '../components/Dialogs/Message/Message';
 import {PostType} from '../components/Profile/MyPosts/Post/Post';
 import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
 import {NavElementType} from '../components/Navbar/Navbar';
+import {rerenderEntireTree} from '../render';
 
-type StateType = {
-    profilePage: {
-        posts: Array<PostType>
-    },
-    dialogsPage: {
-        dialogs: Array<DialogItemType>,
-        messages: Array<MessageType>
-    },
+export type ProfilePageType = {
+    posts: Array<PostType>
+}
+export type DialogsPageType = {
+    dialogs: Array<DialogItemType>,
+    messages: Array<MessageType>
+}
+export type StateType = {
+    profilePage: ProfilePageType,
+    dialogsPage: DialogsPageType,
     navbar: Array<NavElementType>
 }
 
@@ -62,11 +65,23 @@ export const state: StateType = {
         ]
     },
     navbar: [
-        {navElement: 'Profile', to: '/profile'},
-        {navElement: 'Messages', to: '/dialogs'},
-        {navElement: 'News', to: '/news'},
-        {navElement: 'Music', to: '/music'},
-        {navElement: 'Friends', to: '/friends'},
-        {navElement: 'Settings', to: '/settings'},
+        {navElement: 'Profile', to: '/profile', id: 1},
+        {navElement: 'Messages', to: '/dialogs', id: 2},
+        {navElement: 'News', to: '/news', id: 3},
+        {navElement: 'Music', to: '/music', id: 4},
+        {navElement: 'Friends', to: '/friends', id: 5},
+        {navElement: 'Settings', to: '/settings', id: 6},
     ]
+}
+
+export const addPost = (messagePost: string): void => {
+
+    const newPost: PostType = {
+        id: 3,
+        post: messagePost,
+        likes: 0
+    }
+
+    state.profilePage.posts.push(newPost);
+    rerenderEntireTree(state);
 }

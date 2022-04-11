@@ -1,22 +1,25 @@
-import React, {ChangeEvent, LegacyRef} from 'react';
+import React, {LegacyRef} from 'react';
 import classes from './MyPosts.module.css';
 import {Post, PostType} from './Post/Post';
 
 
-type MyPostsType = {
+type MyPostsPropsType = {
     postData: Array<PostType>
+    addPost: (messagePost: string) => void
 }
 
-export function MyPosts({postData}: MyPostsType) {
+export const MyPosts: React.FC<MyPostsPropsType> = ({postData, addPost}) => {
 
-    const posts = postData.map(p => <Post post={p.post} likes={p.likes} id={p.id}/>);
+    const posts = postData.map(p => <Post key={p.id} post={p.post} likes={p.likes} id={p.id}/>);
 
     const newPostElement: LegacyRef<HTMLTextAreaElement> = React.createRef();
 
-    const addPost: () => void = () => {
-        // @ts-ignore
-        const textareaValue = newPostElement.current.value;
-        console.log(textareaValue);
+    const onClickButtonHandler: () => void = () => {
+        if (newPostElement.current) {
+            let postMessage = newPostElement.current.value;
+            addPost(postMessage);
+            newPostElement.current.value = '';
+        }
     }
 
     return (
@@ -25,7 +28,7 @@ export function MyPosts({postData}: MyPostsType) {
             <div>
                 <textarea ref={newPostElement}/>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onClickButtonHandler}>Add post</button>
                 </div>
             </div>
             <div className={classes.posts}>

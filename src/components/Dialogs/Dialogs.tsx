@@ -1,27 +1,25 @@
 import React, {LegacyRef} from 'react';
 import classes from './Dialogs.module.css';
-import {DialogItem, DialogItemType} from './DialogItem/DialogItem';
-import {Message, MessageType} from './Message/Message';
+import {DialogItem} from './DialogItem/DialogItem';
+import {Message} from './Message/Message';
+import {DialogsPageType} from '../../redux/state';
 
 type DialogsType = {
-    state: {
-        dialogs: Array<DialogItemType>
-        messages: Array<MessageType>
-    }
+    dialogsPage: DialogsPageType
 }
 
-export function Dialogs({state}: DialogsType) {
+export const Dialogs: React.FC<DialogsType> = ({dialogsPage}) => {
 
-    const dialogs = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>);
-    const messages = state.messages.map(m => <Message message={m.message} id={m.id}/>);
+    const dialogs = dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>);
+    const messages = dialogsPage.messages.map(m => <Message message={m.message} id={m.id}/>);
     const newMessageElement: LegacyRef<HTMLTextAreaElement> = React.createRef();
 
     const sendMessage: () => void = () => {
-        // @ts-ignore
-        const textMessage = newMessageElement.current.value;
-        console.log(textMessage);
+        if (newMessageElement.current) {
+            const textMessage = newMessageElement.current.value;
+            console.log(textMessage);
+        }
     }
-
 
     return (
         <div className={classes.dialogs}>
