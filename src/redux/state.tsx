@@ -6,6 +6,7 @@ import {rerenderEntireTree} from '../render';
 
 export type ProfilePageType = {
     posts: Array<PostType>
+    textareaValue: string
 }
 export type DialogsPageType = {
     dialogs: Array<DialogItemType>,
@@ -23,6 +24,7 @@ export const state: StateType = {
             {id: 1, post: 'Tell me how are you friends?', likes: 10},
             {id: 2, post: 'Hello, it is my first posts', likes: 15}
         ],
+        textareaValue: ''
     },
     dialogsPage: {
         dialogs: [
@@ -75,13 +77,19 @@ export const state: StateType = {
 }
 
 export const addPost = (messagePost: string): void => {
-
     const newPost: PostType = {
         id: 3,
         post: messagePost,
         likes: 0
     }
-
+    state.profilePage.textareaValue = ''; // обнулили наше значение value после добавления поста на стену
     state.profilePage.posts.push(newPost);
     rerenderEntireTree(state);
 }
+
+export const changeValueTextarea = (value: string): void => {
+    state.profilePage.textareaValue = value;
+    rerenderEntireTree(state);
+}
+
+

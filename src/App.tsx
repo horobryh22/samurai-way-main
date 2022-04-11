@@ -10,9 +10,10 @@ import {StateType} from './redux/state';
 type AppType = {
     state: StateType
     addPost: (messagePost: string) => void
+    changeValueTextarea: (value: string) => void
 }
 
-const App: React.FC<AppType> = ({state, addPost}) => {
+const App: React.FC<AppType> = ({state, addPost, changeValueTextarea}) => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -20,7 +21,8 @@ const App: React.FC<AppType> = ({state, addPost}) => {
                 <Navbar state={state.navbar}/>
                 <div className="app-wrapper-content">
                     <Route path="/profile" render={() => <Profile addPost={addPost}
-                                                                  profilePage={state.profilePage}/>}/> {/*заменили атрибут component на render, для того, чтобы можно было прокинуть props.*/}
+                                                                  profilePage={state.profilePage}
+                                                                  changeValueTextarea={changeValueTextarea}/>}/> {/*заменили атрибут component на render, для того, чтобы можно было прокинуть props.*/}
                     <Route path="/dialogs" render={() => <Dialogs dialogsPage={state.dialogsPage}/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
