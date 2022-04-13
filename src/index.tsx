@@ -1,17 +1,19 @@
 import React from 'react';
 import './index.css';
-import {state, subscriber} from './redux/state';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {addPost, changeValueTextareaMessage, changeValueTextareaPost, sendMessage, StateType} from './redux/state';
+import {StateType, store} from './redux/state';
 
 export const rerenderEntireTree = (state: StateType): void => {
     ReactDOM.render(
-        <App state={state} addPost={addPost} changeValueTextareaMessage={changeValueTextareaMessage}
-             changeValueTextareaPost={changeValueTextareaPost} sendMessage={sendMessage}/>,
+        <App state={store.getState()} addPost={store.addPost.bind(store)} changeValueTextareaMessage={store.changeValueTextareaMessage.bind(store)}
+             changeValueTextareaPost={store.changeValueTextareaPost.bind(store)} sendMessage={store.sendMessage.bind(store)}/>,
         document.getElementById('root')
     );
 }
 
-rerenderEntireTree(state);
-subscriber(rerenderEntireTree);
+//store.addPost.bind(store) - означает, что мы нашему методу, принадлежащему объекту store, делаем четкую привязку к этому объекту с помощью метода bind и теперь всегда, когда мы будем вызывать этот объект даже без точки, он будет вызываться в контексте вызова нашего store.
+
+store.subscriber(rerenderEntireTree);
+rerenderEntireTree(store.getState());
+
