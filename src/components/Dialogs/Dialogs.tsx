@@ -1,8 +1,8 @@
-import React, {LegacyRef} from 'react';
+import React, {ChangeEvent, LegacyRef} from 'react';
 import classes from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {changeValueTextareaPost, DialogsPageType} from '../../redux/state';
+import {DialogsPageType} from '../../redux/state';
 
 type DialogsType = {
     dialogsPage: DialogsPageType
@@ -15,18 +15,15 @@ export const Dialogs: React.FC<DialogsType> = ({dialogsPage, sendMessage, change
     const dialogs = dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>);
     const messages = dialogsPage.messages.map(m => <Message message={m.message} id={m.id}/>);
     const textareaValue = dialogsPage.textareaValue;
-    const newMessageElement: LegacyRef<HTMLTextAreaElement> = React.createRef();
 
 
     const onClickButtonHandler = (): void => {
         sendMessage(textareaValue);
     }
 
-    const onChangeTextareaHandler = (): void => {
-        if (newMessageElement.current) {
-            const value = newMessageElement.current.value;
-            changeValueTextareaMessage(value);
-        }
+    const onChangeTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+        const value = e.currentTarget.value;
+        changeValueTextareaMessage(value);
     }
 
     return (
@@ -40,7 +37,7 @@ export const Dialogs: React.FC<DialogsType> = ({dialogsPage, sendMessage, change
                 <div className={classes.messagesWrapper}>
                     {messages}
                 </div>
-                <textarea onChange={onChangeTextareaHandler} ref={newMessageElement} value={textareaValue}/>
+                <textarea onChange={onChangeTextareaHandler} value={textareaValue}/>
                 <div>
                     <button onClick={onClickButtonHandler}>Send Message</button>
                 </div>

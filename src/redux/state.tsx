@@ -2,7 +2,6 @@ import {MessageType} from '../components/Dialogs/Message/Message';
 import {PostType} from '../components/Profile/MyPosts/Post/Post';
 import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
 import {NavElementType} from '../components/Navbar/Navbar';
-import {rerenderEntireTree} from '../render';
 
 export type ProfilePageType = {
     posts: Array<PostType>
@@ -76,6 +75,12 @@ export const state: StateType = {
         {navElement: 'Friends', to: '/friends', id: 5},
         {navElement: 'Settings', to: '/settings', id: 6},
     ]
+};
+
+let rerenderEntireTree = (state: StateType): void => {};
+
+export const subscriber = (observer: (state: StateType) => void): void => {
+    rerenderEntireTree = observer;
 }
 
 export const addPost = (messagePost: string): void => {
