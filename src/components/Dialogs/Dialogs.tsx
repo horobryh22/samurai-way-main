@@ -2,27 +2,26 @@ import React, {ChangeEvent, LegacyRef} from 'react';
 import classes from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {DialogsPageType} from '../../redux/state';
+import {ActionType, DialogsPageType} from '../../redux/state';
 
 type DialogsType = {
     dialogsPage: DialogsPageType
-    sendMessage: (textMessage: string) => void
-    changeValueTextareaMessage: (value: string) => void
+    dispatch: (action: ActionType) => void
 }
 
-export const Dialogs: React.FC<DialogsType> = ({dialogsPage, sendMessage, changeValueTextareaMessage}) => {
+export const Dialogs: React.FC<DialogsType> = ({dialogsPage, dispatch}) => {
 
     const dialogs = dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.avatar}/>);
     const messages = dialogsPage.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>);
     const textareaValue = dialogsPage.textareaValue;
 
     const onClickButtonHandler = (): void => {
-        sendMessage(textareaValue);
+        dispatch({type: 'SEND-MESSAGE', textMessage: textareaValue})
     }
 
     const onChangeTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-        const value = e.currentTarget.value;
-        changeValueTextareaMessage(value);
+        const valueMessage = e.currentTarget.value;
+        dispatch({type: 'CHANGE-VALUE-TEXTAREA-MESSAGE', valueMessage})
     }
 
     return (

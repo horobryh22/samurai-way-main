@@ -3,6 +3,15 @@ import {PostType} from '../components/Profile/MyPosts/Post/Post';
 import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
 import {NavElementType} from '../components/Navbar/Navbar';
 
+export type TypeNameType = 'ADD-POST' | 'CHANGE-VALUE-TEXTAREA-POST' | 'SEND-MESSAGE' | 'CHANGE-VALUE-TEXTAREA-MESSAGE';
+export type ActionType = {
+    type: TypeNameType
+    messagePost?: string
+    valuePost?: string
+    textMessage?: string
+    valueMessage?: string
+
+}
 export type ProfilePageType = {
     posts: Array<PostType>
     textareaValue: string
@@ -22,10 +31,7 @@ export type StoreType = {
     getState: () => StateType
     _rerenderEntireTree: (state: StateType) => void
     subscriber: (observer: (state: StateType) => void) => void
-    addPost: (messagePost: string) => void
-    changeValueTextareaPost: (value: string) => void
-    sendMessage: (textMessage: string) => void
-    changeValueTextareaMessage: (value: string) => void
+    dispatch: (action: ActionType) => void
 }
 
 export const store: StoreType = {
@@ -87,39 +93,95 @@ export const store: StoreType = {
             {navElement: 'Settings', to: '/settings', id: 6},
         ]
     },
+    _rerenderEntireTree() {
+    },
     getState() {
         return this._state
-    },
-    _rerenderEntireTree() {
     },
     subscriber(observer) {
         this._rerenderEntireTree = observer;
     },
-    addPost(messagePost) {
-        const newPost: PostType = {
-            id: 3,
-            post: messagePost,
-            likes: 0
+    // dispatch(action: ActionType) {
+    //     if (action.type === 'ADD-POST') {
+    //
+    //         if (action.messagePost !== undefined) {
+    //             const newPost: PostType = {
+    //                 id: 3,
+    //                 post: action.messagePost,
+    //                 likes: 0
+    //             }
+    //             this._state.profilePage.textareaValue = '';
+    //             this._state.profilePage.posts.push(newPost);
+    //             this._rerenderEntireTree(this._state);
+    //         }
+    //
+    //     } else if (action.type === 'CHANGE-VALUE-TEXTAREA-POST') {
+    //
+    //         if (action.valuePost !== undefined) {
+    //             this._state.profilePage.textareaValue = action.valuePost;
+    //             this._rerenderEntireTree(this._state);
+    //         }
+    //
+    //     } else if (action.type === 'SEND-MESSAGE') {
+    //
+    //         if (action.textMessage !== undefined) {
+    //             const newMessage = {
+    //                 id: 5,
+    //                 message: action.textMessage
+    //             }
+    //             this._state.dialogsPage.messages.push(newMessage);
+    //             this._state.dialogsPage.textareaValue = '';
+    //             this._rerenderEntireTree(this._state);
+    //         }
+    //
+    //     } else if (action.type === 'CHANGE-VALUE-TEXTAREA-MESSAGE') {
+    //
+    //         if (action.valueMessage) {
+    //             this._state.dialogsPage.textareaValue = action.valueMessage;
+    //             this._rerenderEntireTree(this._state);
+    //         }
+    //     }
+    // }
+    dispatch(action: ActionType) {
+        switch (action.type) {
+            case 'ADD-POST':
+                if (action.messagePost !== undefined) {
+                    const newPost: PostType = {
+                        id: 3,
+                        post: action.messagePost,
+                        likes: 0
+                    }
+                    this._state.profilePage.textareaValue = '';
+                    this._state.profilePage.posts.push(newPost);
+                    this._rerenderEntireTree(this._state);
+                }
+                break;
+
+            case 'CHANGE-VALUE-TEXTAREA-POST':
+                if (action.valuePost !== undefined) {
+                    this._state.profilePage.textareaValue = action.valuePost;
+                    this._rerenderEntireTree(this._state);
+                }
+                break;
+
+            case 'SEND-MESSAGE':
+                if (action.textMessage !== undefined) {
+                    const newMessage = {
+                        id: 5,
+                        message: action.textMessage
+                    }
+                    this._state.dialogsPage.messages.push(newMessage);
+                    this._state.dialogsPage.textareaValue = '';
+                    this._rerenderEntireTree(this._state);
+                }
+                break;
+
+            case 'CHANGE-VALUE-TEXTAREA-MESSAGE':
+                if (action.valueMessage) {
+                    this._state.dialogsPage.textareaValue = action.valueMessage;
+                    this._rerenderEntireTree(this._state);
+                }
+                break;
         }
-        this._state.profilePage.textareaValue = '';
-        this._state.profilePage.posts.push(newPost);
-        this._rerenderEntireTree(this._state);
-    },
-    changeValueTextareaPost(value: string): void {
-        this._state.profilePage.textareaValue = value;
-        this._rerenderEntireTree(this._state);
-    },
-    sendMessage(textMessage: string): void {
-        const newMessage = {
-            id: 5,
-            message: textMessage
-        }
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.textareaValue = '';
-        this._rerenderEntireTree(this._state);
-    },
-    changeValueTextareaMessage(value: string): void {
-        this._state.dialogsPage.textareaValue = value;
-        this._rerenderEntireTree(this._state);
     }
 }

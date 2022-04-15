@@ -5,29 +5,25 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
-import {StateType} from './redux/state';
+import {ActionType, StateType} from './redux/state';
 
 type AppType = {
     state: StateType
-    addPost: (messagePost: string) => void
-    changeValueTextareaPost: (value: string) => void
-    sendMessage: (textMessage: string) => void
-    changeValueTextareaMessage: (value: string) => void
+    dispatch: (action: ActionType) => void
 }
 
-const App: React.FC<AppType> = ({state, addPost, changeValueTextareaPost, sendMessage, changeValueTextareaMessage}) => {
+const App: React.FC<AppType> = ({state, dispatch}) => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
                 <Navbar state={state.navbar}/>
                 <div className="app-wrapper-content">
-                    <Route path="/profile" render={() => <Profile addPost={addPost}
+                    <Route path="/profile" render={() => <Profile dispatch={dispatch}
                                                                   profilePage={state.profilePage}
-                                                                  changeValueTextareaPost={changeValueTextareaPost}/>}/> {/*заменили атрибут component на render, для того, чтобы можно было прокинуть props.*/}
+                    />}/> {/*заменили атрибут component на render, для того, чтобы можно было прокинуть props.*/}
                     <Route path="/dialogs"
-                           render={() => <Dialogs changeValueTextareaMessage={changeValueTextareaMessage}
-                                                  dialogsPage={state.dialogsPage} sendMessage={sendMessage}/>}/>
+                           render={() => <Dialogs dispatch={dispatch} dialogsPage={state.dialogsPage}/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}
