@@ -12,10 +12,9 @@ type DialogsType = {
 
 export const Dialogs: React.FC<DialogsType> = ({dialogsPage, sendMessage, changeValueTextareaMessage}) => {
 
-    const dialogs = dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>);
-    const messages = dialogsPage.messages.map(m => <Message message={m.message} id={m.id}/>);
+    const dialogs = dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.avatar}/>);
+    const messages = dialogsPage.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>);
     const textareaValue = dialogsPage.textareaValue;
-
 
     const onClickButtonHandler = (): void => {
         sendMessage(textareaValue);

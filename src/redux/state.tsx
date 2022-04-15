@@ -119,7 +119,7 @@ export const store: StoreType = {
         this._rerenderEntireTree(this._state);
     },
     changeValueTextareaMessage(value: string): void {
-        this._state.profilePage.textareaValue = value;
+        this._state.dialogsPage.textareaValue = value;
         this._rerenderEntireTree(this._state);
     }
 }
