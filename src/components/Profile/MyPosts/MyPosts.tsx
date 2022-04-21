@@ -1,12 +1,11 @@
 import React, {ChangeEvent, LegacyRef} from 'react';
 import classes from './MyPosts.module.css';
 import {Post, PostType} from './Post/Post';
-import {ActionType} from '../../../redux/state';
-
+import {ActionTypes, addPostActionCreator, changeValuePostActionCreator} from '../../../redux/state';
 
 type MyPostsPropsType = {
     postData: Array<PostType>
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionTypes) => void
     textareaValue: string
 }
 
@@ -15,12 +14,12 @@ export const MyPosts: React.FC<MyPostsPropsType> = ({postData, dispatch, textare
     const posts = postData.map(p => <Post key={p.id} post={p.post} likes={p.likes} id={p.id}/>);
 
     const onClickButtonHandler = (): void => {
-        dispatch({type: 'ADD-POST', messagePost: textareaValue});
+        dispatch(addPostActionCreator());
     }
 
     const onChangeTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const valuePost = e.currentTarget.value;
-        dispatch({type: 'CHANGE-VALUE-TEXTAREA-POST', valuePost});
+        dispatch(changeValuePostActionCreator(valuePost));
     }
 
     return (

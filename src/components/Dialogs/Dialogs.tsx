@@ -1,12 +1,17 @@
-import React, {ChangeEvent, LegacyRef} from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {ActionType, DialogsPageType} from '../../redux/state';
+import {
+    ActionTypes,
+    changeValueMessageActionCreator,
+    DialogsPageType,
+    sendMessageActionCreator
+} from '../../redux/state';
 
 type DialogsType = {
     dialogsPage: DialogsPageType
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 export const Dialogs: React.FC<DialogsType> = ({dialogsPage, dispatch}) => {
@@ -16,12 +21,12 @@ export const Dialogs: React.FC<DialogsType> = ({dialogsPage, dispatch}) => {
     const textareaValue = dialogsPage.textareaValue;
 
     const onClickButtonHandler = (): void => {
-        dispatch({type: 'SEND-MESSAGE', textMessage: textareaValue})
+        dispatch(sendMessageActionCreator())
     }
 
     const onChangeTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const valueMessage = e.currentTarget.value;
-        dispatch({type: 'CHANGE-VALUE-TEXTAREA-MESSAGE', valueMessage})
+        dispatch(changeValueMessageActionCreator(valueMessage));
     }
 
     return (
