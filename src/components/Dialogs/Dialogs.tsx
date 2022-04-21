@@ -2,12 +2,8 @@ import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {
-    ActionTypes,
-    changeValueMessageActionCreator,
-    DialogsPageType,
-    sendMessageActionCreator
-} from '../../redux/state';
+import {ActionTypes, DialogsPageType} from '../../redux/state';
+import {changeValueMessageActionCreator, sendMessageActionCreator} from '../../redux/reducers/dialogs-reducer';
 
 type DialogsType = {
     dialogsPage: DialogsPageType
@@ -18,7 +14,7 @@ export const Dialogs: React.FC<DialogsType> = ({dialogsPage, dispatch}) => {
 
     const dialogs = dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.avatar}/>);
     const messages = dialogsPage.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>);
-    const textareaValue = dialogsPage.textareaValue;
+    const textareaValue = dialogsPage.messageText;
 
     const onClickButtonHandler = (): void => {
         dispatch(sendMessageActionCreator())
@@ -40,7 +36,11 @@ export const Dialogs: React.FC<DialogsType> = ({dialogsPage, dispatch}) => {
                 <div className={classes.messagesWrapper}>
                     {messages}
                 </div>
-                <textarea onChange={onChangeTextareaHandler} value={textareaValue}/>
+                <textarea
+                    placeholder={'Enter your message'}
+                    onChange={onChangeTextareaHandler}
+                    value={textareaValue}
+                />
                 <div>
                     <button onClick={onClickButtonHandler}>Send Message</button>
                 </div>

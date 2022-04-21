@@ -2,32 +2,28 @@ import {MessageType} from '../components/Dialogs/Message/Message';
 import {PostType} from '../components/Profile/MyPosts/Post/Post';
 import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
 import {NavElementType} from '../components/Navbar/Navbar';
-
-export const sendMessageActionCreator = () => ({type: 'SEND-MESSAGE'} as const);
-export const addPostActionCreator = () => ({type: 'ADD-POST'} as const);
-
-export const changeValueMessageActionCreator = (valueMessage: string) =>
-    ({type: 'CHANGE-VALUE-TEXTAREA-MESSAGE', valueMessage} as const);
-
-export const changeValuePostActionCreator = (valuePost: string) =>
-    ({type: 'CHANGE-VALUE-TEXTAREA-POST', valuePost} as const);
+import {addPostActionCreator, changeValuePostActionCreator, profileReducer} from './reducers/profile-reducer';
+import {changeValueMessageActionCreator, dialogsReducer, sendMessageActionCreator} from './reducers/dialogs-reducer';
+import {navbarReducer} from './reducers/navbar-reducer';
 
 
 export type ActionTypes = ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof addPostActionCreator> |
                           ReturnType<typeof changeValueMessageActionCreator> | ReturnType<typeof changeValuePostActionCreator>;
+
 export type ProfilePageType = {
     posts: Array<PostType>
-    textareaValue: string
+    postText: string
 }
 export type DialogsPageType = {
     dialogs: Array<DialogItemType>
     messages: Array<MessageType>
-    textareaValue: string
+    messageText: string
 }
+export type NavbarType = Array<NavElementType>
 export type StateType = {
     profilePage: ProfilePageType,
     dialogsPage: DialogsPageType,
-    navbar: Array<NavElementType>
+    navbar: NavbarType
 }
 export type StoreType = {
     _state: StateType
@@ -44,7 +40,7 @@ export const store: StoreType = {
                 {id: 1, post: 'Tell me how are you friends?', likes: 10},
                 {id: 2, post: 'Hello, it is my first posts', likes: 15}
             ],
-            textareaValue: ''
+            postText: ''
         },
         dialogsPage: {
             dialogs: [
@@ -85,7 +81,7 @@ export const store: StoreType = {
                 {id: 3, message: 'Nice to meet you'},
                 {id: 4, message: 'Where are you from?'}
             ],
-            textareaValue: ''
+            messageText: ''
         },
         navbar: [
             {navElement: 'Profile', to: '/profile', id: 1},
@@ -105,38 +101,13 @@ export const store: StoreType = {
         this._rerenderEntireTree = observer;
     },
     dispatch(action) {
-        switch (action.type) {
-            case 'ADD-POST':
-                const newPost = {
-                    id: 3,
-                    post: this._state.profilePage.textareaValue,
-                    likes: 0
-                }
-                this._state.profilePage.textareaValue = '';
-                this._state.profilePage.posts.push(newPost);
-                this._rerenderEntireTree();
-                break;
 
-            case 'CHANGE-VALUE-TEXTAREA-POST':
-                this._state.profilePage.textareaValue = action.valuePost;
-                this._rerenderEntireTree();
-                break;
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.navbar = navbarReducer(this._state.navbar, action);
 
-            case 'SEND-MESSAGE':
-                const newMessage = {
-                    id: 5,
-                    message: this._state.dialogsPage.textareaValue
-                }
-                this._state.dialogsPage.messages.push(newMessage);
-                this._state.dialogsPage.textareaValue = '';
-                this._rerenderEntireTree();
-                break;
-
-            case 'CHANGE-VALUE-TEXTAREA-MESSAGE':
-                this._state.dialogsPage.textareaValue = action.valueMessage;
-                this._rerenderEntireTree();
-                break;
-        }
+        this._rerenderEntireTree();
     }
-}
+};
+
 

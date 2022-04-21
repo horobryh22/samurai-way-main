@@ -13,7 +13,7 @@ export const Profile: React.FC<ProfileType> = ({profilePage, dispatch}) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts postData={profilePage.posts} dispatch={dispatch} textareaValue = {profilePage.textareaValue} />
+            <MyPosts postData={profilePage.posts} dispatch={dispatch} textareaValue = {profilePage.postText} />
         </div>
     );
 }
