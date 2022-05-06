@@ -1,7 +1,6 @@
 import {MessageType} from '../components/Dialogs/Message/Message';
 import {PostType} from '../components/Profile/MyPosts/Post/Post';
 import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
-import {NavElementType} from '../components/Navbar/Navbar';
 import {addPostActionCreator, changeValuePostActionCreator, profileReducer} from './reducers/profile-reducer';
 import {changeValueMessageActionCreator, dialogsReducer, sendMessageActionCreator} from './reducers/dialogs-reducer';
 import {navbarReducer} from './reducers/navbar-reducer';
@@ -20,6 +19,11 @@ export type DialogsPageType = {
     messageText: string
 }
 export type NavbarType = Array<NavElementType>
+export type NavElementType = {
+    id: number
+    navElement: string
+    to: string
+}
 export type StateType = {
     profilePage: ProfilePageType,
     dialogsPage: DialogsPageType,

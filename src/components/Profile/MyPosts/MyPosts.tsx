@@ -1,26 +1,25 @@
-import React, {ChangeEvent, LegacyRef} from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
 import {Post, PostType} from './Post/Post';
-import {ActionTypes} from '../../../redux/store';
-import {addPostActionCreator, changeValuePostActionCreator} from '../../../redux/reducers/profile-reducer';
 
 type MyPostsPropsType = {
     postData: Array<PostType>
-    dispatch: (action: ActionTypes) => void
     textareaValue: string
+    addPost: () => void
+    changeValuePost: (valuePost: string) => void
 }
 
-export const MyPosts: React.FC<MyPostsPropsType> = ({postData, dispatch, textareaValue}) => {
+export const MyPosts: React.FC<MyPostsPropsType> = ({postData, textareaValue, addPost, changeValuePost}) => {
 
     const posts = postData.map(p => <Post key={p.id} post={p.post} likes={p.likes} id={p.id}/>);
 
     const onClickButtonHandler = (): void => {
-        dispatch(addPostActionCreator());
+        addPost();
     }
 
     const onChangeTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const valuePost = e.currentTarget.value;
-        dispatch(changeValuePostActionCreator(valuePost));
+        changeValuePost(valuePost);
     }
 
     return (

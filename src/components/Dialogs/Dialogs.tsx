@@ -2,27 +2,27 @@ import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {ActionTypes, DialogsPageType} from '../../redux/store';
-import {changeValueMessageActionCreator, sendMessageActionCreator} from '../../redux/reducers/dialogs-reducer';
+import {DialogsPageType} from '../../redux/store';
 
 type DialogsType = {
     dialogsPage: DialogsPageType
-    dispatch: (action: ActionTypes) => void
+    sendMessage: () => void
+    changeValueMessage: (valueMessage: string) => void
 }
 
-export const Dialogs: React.FC<DialogsType> = ({dialogsPage, dispatch}) => {
+export const Dialogs: React.FC<DialogsType> = ({dialogsPage, changeValueMessage, sendMessage}) => {
 
     const dialogs = dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.avatar}/>);
     const messages = dialogsPage.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>);
     const textareaValue = dialogsPage.messageText;
 
     const onClickButtonHandler = (): void => {
-        dispatch(sendMessageActionCreator())
+        sendMessage();
     }
 
     const onChangeTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         const valueMessage = e.currentTarget.value;
-        dispatch(changeValueMessageActionCreator(valueMessage));
+        changeValueMessage(valueMessage);
     }
 
     return (

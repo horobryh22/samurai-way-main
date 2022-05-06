@@ -5,25 +5,25 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
+import type {Store} from 'redux';
 import {ActionTypes, StateType} from './redux/store';
+import {Action} from 'redux';
+import {DialogsContainer} from './components/Dialogs/DialogsContainer';
+
 
 type AppType = {
-    state: StateType
-    dispatch: (action: ActionTypes) => void
+    store: Store<StateType, ActionTypes>
 }
 
-const App: React.FC<AppType> = ({state, dispatch}) => {
+const App: React.FC<AppType> = ({store}) => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar state={state.navbar}/>
+                <Navbar store={store}/>
                 <div className="app-wrapper-content">
-                    <Route path="/profile" render={() => <Profile dispatch={dispatch}
-                                                                  profilePage={state.profilePage}
-                    />}/> {/*заменили атрибут component на render, для того, чтобы можно было прокинуть props.*/}
-                    <Route path="/dialogs"
-                           render={() => <Dialogs dispatch={dispatch} dialogsPage={state.dialogsPage}/>}/>
+                    <Route path="/profile" render={() => <Profile store={store}/>}/>
+                    <Route path="/dialogs" render={() => <DialogsContainer store={store}/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}

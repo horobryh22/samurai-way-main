@@ -1,18 +1,17 @@
 import React from 'react';
 import classes from './Navbar.module.css';
 import {NavLink} from 'react-router-dom';
+import {Action, Store} from 'redux';
+import {ActionTypes, StateType} from '../../redux/store';
 
-export type NavbarType = {
-    state: Array<NavElementType>
+export type NavbarPropsType = {
+    store: Store<StateType, ActionTypes>
 }
 
-export type NavElementType = {
-    id: number
-    navElement: string
-    to: string
-}
+export const Navbar: React.FC<NavbarPropsType> = ({store}) => {
 
-export const Navbar: React.FC<NavbarType> = ({state}) => {
+    const state = store.getState().navbar;
+
     return (
         <nav className={classes.nav}>
             {state.map((navElement, i) => (
