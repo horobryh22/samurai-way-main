@@ -5,25 +5,25 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
-import type {Store} from 'redux';
-import {ActionTypes, StateType} from './redux/store';
-import {Action} from 'redux';
+import {StoreContext} from './context-api/StoreContext'
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 
 
-type AppType = {
-    store: Store<StateType, ActionTypes>
-}
 
-const App: React.FC<AppType> = ({store}) => {
+const App = () => {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
                 <Header/>
-                <Navbar store={store}/>
+                <StoreContext.Consumer>
+                    {(store) => <Navbar store={store}/>}
+                </StoreContext.Consumer>
                 <div className="app-wrapper-content">
-                    <Route path="/profile" render={() => <Profile store={store}/>}/>
-                    <Route path="/dialogs" render={() => <DialogsContainer store={store}/>}/>
+                    <Route path="/profile" render={() => <Profile/>}/>
+                    <Route path="/dialogs" render={() =>
+                        <StoreContext.Consumer>
+                            {(store) => <DialogsContainer store={store}/>}
+                        </StoreContext.Consumer>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}

@@ -5,27 +5,29 @@ import {MyPosts} from './MyPosts';
 import {ActionTypes, StateType} from '../../../redux/store';
 
 type MyPostsContainerPropsType = {
-    store: Store<StateType, ActionTypes>
+    store: Store<StateType, ActionTypes> | null
 }
 
 export const MyPostsContainer: React.FC<MyPostsContainerPropsType> = ({store}) => {
+    const state  = store?.getState();
+    if (state) {
+        const addPostHandler = (): void => {
+            store?.dispatch(addPostActionCreator());
+        }
 
-    const state: StateType = store.getState();
+        const changeValuePostHandler = (valuePost: string): void => {
+            store?.dispatch(changeValuePostActionCreator(valuePost));
+        }
 
-    const addPostHandler = (): void => {
-        store.dispatch(addPostActionCreator());
+        return (
+            <MyPosts
+                addPost={addPostHandler}
+                postData={state.profilePage.posts}
+                changeValuePost = {changeValuePostHandler}
+                textareaValue={state.profilePage.postText}
+            />
+        )
+    } else {
+        return <></>
     }
-
-    const changeValuePostHandler = (valuePost: string): void => {
-        store.dispatch(changeValuePostActionCreator(valuePost));
-    }
-
-    return (
-        <MyPosts
-            addPost={addPostHandler}
-            postData={state.profilePage.posts}
-            changeValuePost = {changeValuePostHandler}
-            textareaValue={state.profilePage.postText}
-        />
-    )
 }

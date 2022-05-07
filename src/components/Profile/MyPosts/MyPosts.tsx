@@ -11,7 +11,7 @@ type MyPostsPropsType = {
 
 export const MyPosts: React.FC<MyPostsPropsType> = ({postData, textareaValue, addPost, changeValuePost}) => {
 
-    const posts = postData.map(p => <Post key={p.id} post={p.post} likes={p.likes} id={p.id}/>);
+    const posts = postData?.map(p => <Post key={p.id} post={p.post} likes={p.likes} id={p.id}/>);
 
     const onClickButtonHandler = (): void => {
         addPost();
@@ -26,7 +26,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = ({postData, textareaValue, ad
         <div className={classes.postsBlock}>
             <h3>My post</h3>
             <div>
-                <textarea onChange={onChangeTextareaHandler} value={textareaValue}/>
+                <textarea onChange={onChangeTextareaHandler} value={textareaValue ? textareaValue : ''}/>
                 <div>
                     <button onClick={onClickButtonHandler}>Add post</button>
                 </div>

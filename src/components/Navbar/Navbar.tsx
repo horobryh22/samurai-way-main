@@ -5,16 +5,16 @@ import {Action, Store} from 'redux';
 import {ActionTypes, StateType} from '../../redux/store';
 
 export type NavbarPropsType = {
-    store: Store<StateType, ActionTypes>
+    store: Store<StateType, ActionTypes> | null
 }
 
 export const Navbar: React.FC<NavbarPropsType> = ({store}) => {
 
-    const state = store.getState().navbar;
+   const state = store?.getState().navbar;
 
     return (
         <nav className={classes.nav}>
-            {state.map((navElement, i) => (
+            {state?.map((navElement, i) => (
                 <div key={navElement.id} className={classes.item}>
                     <NavLink to={`${navElement.to}`} activeClassName={classes.active}>{navElement.navElement}</NavLink>
                 </div>

@@ -5,26 +5,30 @@ import {Store} from 'redux';
 import {Dialogs} from './Dialogs';
 
 type DialogsContainerPropsType = {
-    store: Store<StateType, ActionTypes>
+    store: Store<StateType, ActionTypes> | null
 }
 
 export const DialogsContainer: React.FC<DialogsContainerPropsType> = ({store}) => {
 
-    const state = store.getState().dialogsPage;
+    const state = store?.getState().dialogsPage;
 
-    const sendMessageHandler = (): void => {
-        store.dispatch(sendMessageActionCreator())
-    }
+   if (state) {
+       const sendMessageHandler = (): void => {
+           store.dispatch(sendMessageActionCreator())
+       }
 
-    const changeValueMessageHandler = (valueMessage: string): void => {
-        store.dispatch(changeValueMessageActionCreator(valueMessage));
-    }
+       const changeValueMessageHandler = (valueMessage: string): void => {
+           store.dispatch(changeValueMessageActionCreator(valueMessage));
+       }
 
-    return (
-        <Dialogs
-            dialogsPage={state}
-            sendMessage = {sendMessageHandler}
-            changeValueMessage = {changeValueMessageHandler}
-        />
-    )
+       return (
+           <Dialogs
+               dialogsPage={state}
+               sendMessage = {sendMessageHandler}
+               changeValueMessage = {changeValueMessageHandler}
+           />
+       )
+   } else {
+       return <></>
+   }
 }
