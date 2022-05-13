@@ -1,7 +1,7 @@
-import {ActionTypes, ProfilePageType} from '../store';
+import {ActionTypes, ProfilePageType} from '../../store';
 import React from 'react';
 
-const APP_POST = 'ADD-POST';
+const ADD_POST = 'ADD-POST';
 const CHANGE_VALUE_TEXTAREA_POST = 'CHANGE-VALUE-TEXTAREA-POST';
 
 const initialState: ProfilePageType = {
@@ -14,7 +14,7 @@ const initialState: ProfilePageType = {
 
 export const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
-        case APP_POST:
+        case ADD_POST:
             const newPost = {
                 id: 3,
                 post: state.postText,
@@ -27,11 +27,13 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
         case CHANGE_VALUE_TEXTAREA_POST:
             state.postText = action.valuePost;
             break;
+        default:
+            throw new Error('Type doesn\'t found')
     }
     return state;
 }
 
-export const addPostActionCreator = () => ({type: APP_POST} as const);
+export const addPostActionCreator = () => ({type: ADD_POST} as const);
 
 export const changeValuePostActionCreator = (valuePost: string) =>
     ({type: CHANGE_VALUE_TEXTAREA_POST, valuePost} as const);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {ActionTypes, StateType} from '../../redux/store';
-import {changeValueMessageActionCreator, sendMessageActionCreator} from '../../redux/reducers/dialogs-reducer';
+import {changeValueMessageActionCreator, sendMessageActionCreator} from '../../redux/reducers/dialogs/dialogs-reducer';
 import {Store} from 'redux';
 import {Dialogs} from './Dialogs';
 

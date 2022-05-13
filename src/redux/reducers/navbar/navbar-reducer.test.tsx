@@ -1,4 +1,4 @@
-import {ActionTypes, NavbarType} from '../store';
+import {ActionTypes, NavbarType} from '../../store';
 import React from 'react';
 
 const initialState: NavbarType = [
