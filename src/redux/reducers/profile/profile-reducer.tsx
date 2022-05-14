@@ -20,15 +20,10 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 post: state.postText,
                 likes: 0
             }
-            state.postText = '';
-            state.posts = [newPost, ...state.posts];
-            break;
+            return {...state, posts: [newPost, ...state.posts], postText: ''}
 
         case CHANGE_VALUE_TEXTAREA_POST:
-            state.postText = action.valuePost;
-            break;
-        default:
-            throw new Error('Type doesn\'t found')
+            return {...state, postText: action.valuePost}
     }
     return state;
 }

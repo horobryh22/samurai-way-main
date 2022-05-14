@@ -50,19 +50,10 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
 
     switch (action.type) {
         case SEND_MESSAGE:
-            const newMessage = {
-                id: 5,
-                message: state.messageText
-            }
-            state.messages = [newMessage, ...state.messages];
-            state.messageText = '';
-            break;
+            return {...state, messages: [{id: 5, message: state.messageText}, ...state.messages], messageText: ''};
 
         case CHANGE_VALUE_TEXTAREA_MESSAGE:
-            state.messageText = action.valueMessage;
-            break;
-        default:
-            throw new Error('Type doesn\'t found')
+            return {...state, messageText: action.valueMessage}
     }
 
     return state;
