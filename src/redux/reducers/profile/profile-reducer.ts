@@ -1,5 +1,6 @@
-import {ActionTypes, ProfilePageType} from '../../store';
-import React from 'react';
+import {ProfilePageType} from '../../store';
+
+export type ProfileActionsType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof changeValuePostActionCreator>;
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_VALUE_TEXTAREA_POST = 'CHANGE-VALUE-TEXTAREA-POST';
@@ -12,7 +13,7 @@ const initialState: ProfilePageType = {
     postText: ''
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionTypes): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {
@@ -24,8 +25,10 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 
         case CHANGE_VALUE_TEXTAREA_POST:
             return {...state, postText: action.valuePost}
+
+        default:
+            return state;
     }
-    return state;
 }
 
 export const addPostActionCreator = () => ({type: ADD_POST} as const);

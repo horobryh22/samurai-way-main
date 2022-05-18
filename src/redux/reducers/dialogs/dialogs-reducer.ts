@@ -1,12 +1,9 @@
 import {DialogsPageType} from '../../store';
-import React from 'react';
-import {dialogsReducer} from './dialogs-reducer';
 
+export type DialogsActionsType = ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof changeValueMessageActionCreator>;
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
 const CHANGE_VALUE_TEXTAREA_MESSAGE = 'CHANGE-VALUE-TEXTAREA-MESSAGE';
-
-const value = 'Hello world';
 
 const initialState: DialogsPageType = {
     dialogs: [
@@ -50,29 +47,21 @@ const initialState: DialogsPageType = {
     messageText: ''
 }
 
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionsType): DialogsPageType => {
 
-test('The valueTextarea should be changing and the message should be sending', () => {
+    switch (action.type) {
+        case SEND_MESSAGE:
+            return {...state, messages: [{id: 5, message: state.messageText}, ...state.messages], messageText: ''};
 
-    dialogsReducer(initialState, {type: CHANGE_VALUE_TEXTAREA_MESSAGE, valueMessage: value});
+        case CHANGE_VALUE_TEXTAREA_MESSAGE:
+            return {...state, messageText: action.valueMessage}
 
-    expect(initialState.messageText).toBe(value);
+        default:
+            return state;
+    }
+}
 
-    dialogsReducer(initialState, {type: SEND_MESSAGE});
+export const sendMessageActionCreator = () => ({type: SEND_MESSAGE} as const);
 
-    expect(initialState.messageText).toBe('');
-    expect(initialState.messages[0].id).toBe(5);
-    expect(initialState.messages[0].message).toBe(value);
-    expect(initialState.messages.length).toBe(5);
-
-})
-
-test('Expect to get error, because I pass incorrect TYPE', () => {
-
-    expect(() => {
-        // @ts-ignore
-        dialogsReducer(initialState, {type: 'INCORRECT TYPE'});
-    }).toThrowError();
-
-})
-
-
+export const changeValueMessageActionCreator = (valueMessage: string) =>
+    ({type: CHANGE_VALUE_TEXTAREA_MESSAGE, valueMessage} as const);

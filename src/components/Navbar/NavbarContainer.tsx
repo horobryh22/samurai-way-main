@@ -1,7 +1,7 @@
 import React from 'react';
-import {ActionTypes, StateType} from '../../redux/store';
 import {connect} from 'react-redux';
 import {Navbar} from './Navbar';
+import {StateType} from '../../redux/redux-store';
 
 
 const mapStateToProps = (state: StateType) => {
@@ -9,8 +9,8 @@ const mapStateToProps = (state: StateType) => {
         navbar: state.navbar
     }
 }
-
-const mapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
+//
+const mapDispatchToProps = (dispatch: (action: any) => void) => {
     return {
 
     }

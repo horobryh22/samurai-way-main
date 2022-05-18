@@ -1,5 +1,4 @@
-import {ActionTypes, NavbarType} from '../../store';
-import React from 'react';
+import {NavbarType} from '../../store';
 
 const initialState: NavbarType = [
     {navElement: 'Profile', to: '/profile', id: 1},
@@ -10,6 +9,6 @@ const initialState: NavbarType = [
     {navElement: 'Settings', to: '/settings', id: 6},
 ]
 
-export const navbarReducer = (state: NavbarType = initialState, action: ActionTypes): NavbarType => {
+export const navbarReducer = (state: NavbarType = initialState, action: any): NavbarType => {
     return state;
 }

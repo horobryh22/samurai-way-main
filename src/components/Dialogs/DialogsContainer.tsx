@@ -1,8 +1,12 @@
 import React from 'react';
-import {ActionTypes, StateType} from '../../redux/store';
-import {changeValueMessageActionCreator, sendMessageActionCreator} from '../../redux/reducers/dialogs/dialogs-reducer';
+import {
+    DialogsActionsType,
+    changeValueMessageActionCreator,
+    sendMessageActionCreator
+} from '../../redux/reducers/dialogs/dialogs-reducer';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
+import {StateType} from '../../redux/redux-store';
 
 const mapStateToProps = (state: StateType) => {
     return {
@@ -10,7 +14,7 @@ const mapStateToProps = (state: StateType) => {
     }
 }
 
-const mapStateToDispatch = (dispatch: (action: ActionTypes)=> void) => {
+const mapStateToDispatch = (dispatch: (action: DialogsActionsType)=> void) => {
     return {
         sendMessage: () => dispatch(sendMessageActionCreator()),
         changeValueMessage: (valueMessage: string)=> dispatch(changeValueMessageActionCreator(valueMessage))
