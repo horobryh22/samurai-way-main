@@ -2,21 +2,29 @@ import React from 'react';
 import {
     ProfileActionsType,
     addPostActionCreator,
-    changeValuePostActionCreator
+    changeValuePostActionCreator, ProfilePageType
 } from '../../../redux/reducers/profile/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
 import {StateType} from '../../../redux/redux-store';
 
+export type MapStatePropsType = {
+    profilePage: ProfilePageType
+}
 
-const mapStateToProps = (state: StateType) => {
+export type MapDispatchPropsType = {
+    addPost: () => void
+    changeValuePost: (valuePost: string) => void
+}
+
+
+const mapStateToProps = (state: StateType): MapStatePropsType => {
     return {
-        postData: state.profilePage.posts,
-        textareaValue: state.profilePage.postText
+        profilePage: state.profilePage
     }
 }
 
-const mapDispatchToProps = (dispatch: (action: ProfileActionsType) => void) => {
+const mapDispatchToProps = (dispatch: (action: ProfileActionsType) => void): MapDispatchPropsType => {
     return {
         addPost: () => {
             dispatch(addPostActionCreator());

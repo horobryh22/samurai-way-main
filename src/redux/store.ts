@@ -9,21 +9,12 @@ import {navbarReducer} from './reducers/navbar/navbar-reducer';
 // export type ActionTypes = ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof addPostActionCreator> |
 //                           ReturnType<typeof changeValueMessageActionCreator> | ReturnType<typeof changeValuePostActionCreator>;
 
-export type ProfilePageType = {
-    posts: Array<PostType>
-    postText: string
-}
-export type DialogsPageType = {
-    dialogs: Array<DialogItemType>
-    messages: Array<MessageType>
-    messageText: string
-}
-export type NavbarType = Array<NavElementType>
-export type NavElementType = {
-    id: number
-    navElement: string
-    to: string
-}
+// export type ProfilePageType = {
+//     posts: Array<PostType>
+//     postText: string
+// }
+
+
 // export type StateType = {
 //     profilePage: ProfilePageType,
 //     dialogsPage: DialogsPageType,

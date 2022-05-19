@@ -1,11 +1,9 @@
 import React from 'react';
 import classes from './Navbar.module.css';
 import {NavLink} from 'react-router-dom';
-import {NavbarType} from '../../redux/store';
+import {MapDispatchPropsType, MapStatePropsType} from './NavbarContainer';
 
-export type NavbarPropsType = {
-    navbar: NavbarType
-}
+export type NavbarPropsType = MapStatePropsType & MapDispatchPropsType;
 
 export const Navbar: React.FC<NavbarPropsType> = ({navbar}) => {
 

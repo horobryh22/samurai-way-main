@@ -1,6 +1,4 @@
-import {ProfilePageType} from '../../store';
-import React from 'react';
-import {addPostActionCreator, changeValuePostActionCreator, profileReducer} from './profile-reducer';
+import {addPostActionCreator, changeValuePostActionCreator, ProfilePageType, profileReducer} from './profile-reducer';
 
 let valuePost: string;
 let initialState: ProfilePageType

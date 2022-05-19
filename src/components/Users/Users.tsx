@@ -1,12 +1,8 @@
 import React from 'react';
-import {UsersPageType, UserType} from '../../redux/reducers/users/users-reducer';
 import classes from './Users.module.css';
+import {MapDispatchPropsType, MapStatePropsType} from './UsersContainer';
 
-export type UsersPropsType = {
-    usersPage: UsersPageType
-    changeFollowed: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
-}
+export type UsersPropsType = MapDispatchPropsType & MapStatePropsType;
 
 export const Users: React.FC<UsersPropsType> = ({usersPage, changeFollowed, setUsers}) => {
 

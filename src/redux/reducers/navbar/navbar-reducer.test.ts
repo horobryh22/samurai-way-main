@@ -1,4 +1,4 @@
-import {NavbarType} from '../../store';
+import {NavbarType} from './navbar-reducer';
 
 const initialState: NavbarType = [
     {navElement: 'Profile', to: '/profile', id: 1},

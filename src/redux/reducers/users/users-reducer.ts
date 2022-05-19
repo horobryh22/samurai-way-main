@@ -1,4 +1,4 @@
-export type UserLocationType = {
+type UserLocationType = {
     city: string
     country: string
 }
@@ -12,17 +12,15 @@ export type UserType = {
     followed: boolean
 }
 
-export type UsersPageType = {
-    users: Array<UserType>
-}
+export type UsersPageType = typeof initialState;
 
 export type UsersActionsType = ReturnType<typeof changeFollowedAC> | ReturnType<typeof setUsersAC>;
 
 const CHANGE_FOLLOWED = 'CHANGE-FOLLOWED';
 const SET_USERS = 'SET-USERS';
 
-const initialState: UsersPageType = {
-    users: []
+const initialState = {
+    users: [] as Array<UserType>
 }
 
 export const usersReducer = (state: UsersPageType = initialState, action: UsersActionsType): UsersPageType => {

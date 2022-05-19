@@ -1,5 +1,9 @@
-import {DialogsPageType} from '../../store';
-import {changeValueMessageActionCreator, dialogsReducer, sendMessageActionCreator} from './dialogs-reducer';
+import {
+    changeValueMessageActionCreator,
+    DialogsPageType,
+    dialogsReducer,
+    sendMessageActionCreator
+} from './dialogs-reducer';
 
 
 let value: string;

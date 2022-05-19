@@ -1,11 +1,13 @@
-import {DialogsPageType} from '../../store';
+import {DialogItemType} from '../../../components/Dialogs/DialogItem/DialogItem';
+import {MessageType} from '../../../components/Dialogs/Message/Message';
 
+export type DialogsPageType = typeof initialState;
 export type DialogsActionsType = ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof changeValueMessageActionCreator>;
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
 const CHANGE_VALUE_TEXTAREA_MESSAGE = 'CHANGE-VALUE-TEXTAREA-MESSAGE';
 
-const initialState: DialogsPageType = {
+const initialState = {
     dialogs: [
         {
             id: 1,
@@ -37,13 +39,13 @@ const initialState: DialogsPageType = {
             name: 'Oly',
             avatar: 'https://avatars.mds.yandex.net/i?id=dff8a0b76910b049f55c6f118f3e3581_l-5663611-images-thumbs&ref=rim&n=13&w=640&h=640'
         },
-    ],
+    ] as Array<DialogItemType>,
     messages: [
         {id: 1, message: 'Hello'},
         {id: 2, message: 'How are you?'},
         {id: 3, message: 'Nice to meet you'},
         {id: 4, message: 'Where are you from?'}
-    ],
+    ] as Array<MessageType>,
     messageText: ''
 }
 

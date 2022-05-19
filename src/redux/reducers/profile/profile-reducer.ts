@@ -1,15 +1,17 @@
-import {ProfilePageType} from '../../store';
+import {PostType} from '../../../components/Profile/MyPosts/Post/Post';
+
+export type ProfilePageType = typeof initialState;
 
 export type ProfileActionsType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof changeValuePostActionCreator>;
 
 const ADD_POST = 'ADD-POST';
 const CHANGE_VALUE_TEXTAREA_POST = 'CHANGE-VALUE-TEXTAREA-POST';
 
-const initialState: ProfilePageType = {
+const initialState = {
     posts: [
         {id: 1, post: 'Tell me how are you friends?', likes: 10},
         {id: 2, post: 'Hello, it is my first posts', likes: 15}
-    ],
+    ] as Array<PostType>,
     postText: ''
 }
 
