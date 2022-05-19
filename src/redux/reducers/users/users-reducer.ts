@@ -3,24 +3,37 @@ type UserLocationType = {
     country: string
 }
 
-export type UserType = {
+export type UsersTestType = {
+    name: string
     id: number
-    fullName: string
-    avatar: string
-    location: UserLocationType
-    status: string
+    photos: {
+        small: null | string
+        large: null | string
+    }
+    status: null | string
     followed: boolean
 }
 
-export type UsersPageType = typeof initialState;
+// export type UserType = {
+//     id: number
+//     fullName: string
+//     avatar: string
+//     location: UserLocationType
+//     status: string
+//     followed: boolean
+// }
+
+export type UsersPageType = {
+    users: Array<UsersTestType>
+}
 
 export type UsersActionsType = ReturnType<typeof changeFollowedAC> | ReturnType<typeof setUsersAC>;
 
 const CHANGE_FOLLOWED = 'CHANGE-FOLLOWED';
 const SET_USERS = 'SET-USERS';
 
-const initialState = {
-    users: [] as Array<UserType>
+const initialState: UsersPageType = {
+    users: []
 }
 
 export const usersReducer = (state: UsersPageType = initialState, action: UsersActionsType): UsersPageType => {
@@ -50,7 +63,7 @@ export const changeFollowedAC = (userId: number) => {
     } as const
 }
 
-export const setUsersAC = (users: Array<UserType>) => {
+export const setUsersAC = (users: Array<UsersTestType>) => {
     return {
         type: SET_USERS,
         payload: {

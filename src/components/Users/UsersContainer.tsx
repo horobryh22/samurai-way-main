@@ -5,8 +5,7 @@ import {
     changeFollowedAC,
     setUsersAC,
     UsersActionsType,
-    UsersPageType,
-    UserType
+    UsersPageType, UsersTestType,
 } from '../../redux/reducers/users/users-reducer';
 
 export type MapStatePropsType = {
@@ -15,7 +14,7 @@ export type MapStatePropsType = {
 
 export type MapDispatchPropsType = {
     changeFollowed: (userId: number) => void
-    setUsers: (users: Array<UserType>) => void
+    setUsers: (users: Array<UsersTestType>) => void
 }
 
 const mapStateToProps = (state: StateType): MapStatePropsType => {
@@ -29,7 +28,7 @@ const mapDispatchToProps = (dispatch: (action: UsersActionsType) => void): MapDi
         changeFollowed: (userId: number) => {
             dispatch(changeFollowedAC(userId));
         },
-        setUsers: (users: Array<UserType>) => {
+        setUsers: (users: Array<UsersTestType>) => {
             dispatch(setUsersAC(users));
         }
     }
