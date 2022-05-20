@@ -1,8 +1,9 @@
 import {connect} from 'react-redux';
-import {Users} from './Users';
+import {Users} from './UsersClassComponent';
 import {StateType} from '../../redux/redux-store';
 import {
-    changeFollowedAC,
+    changeCurrentPageAC,
+    changeFollowedAC, setTotalCountAC,
     setUsersAC,
     UsersActionsType,
     UsersPageType, UsersTestType,
@@ -14,7 +15,10 @@ export type MapStatePropsType = {
 
 export type MapDispatchPropsType = {
     changeFollowed: (userId: number) => void
+    setTotalCount: (totalCount: number) => void
     setUsers: (users: Array<UsersTestType>) => void
+    changeCurrentPage: (pageNumber: number) => void
+
 }
 
 const mapStateToProps = (state: StateType): MapStatePropsType => {
@@ -30,6 +34,12 @@ const mapDispatchToProps = (dispatch: (action: UsersActionsType) => void): MapDi
         },
         setUsers: (users: Array<UsersTestType>) => {
             dispatch(setUsersAC(users));
+        },
+        changeCurrentPage: (pageNumber: number) => {
+            dispatch(changeCurrentPageAC(pageNumber))
+        },
+        setTotalCount: (totalCount: number) => {
+            dispatch(setTotalCountAC(totalCount));
         }
     }
 }

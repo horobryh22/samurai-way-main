@@ -15,16 +15,18 @@ type DataType = {
 
 export const Users: React.FC<UsersPropsType> = ({usersPage, changeFollowed, setUsers}) => {
 
-    if (usersPage.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
-            .then((response: AxiosResponse<DataType>) => {
-                console.log(response.data);
-                setUsers(response.data.items);
-            })
+    const getUsers = () => {
+        if (usersPage.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users?count=5&page=1')
+                .then((response: AxiosResponse<DataType>) => {
+                    setUsers(response.data.items);
+                })
+        }
     }
 
     return (
         <div className={classes.userPage}>
+            <button onClick={getUsers}>Get Users</button>
             {usersPage.users.map(u => {
                 return (
                     <div key={u.id} className={classes.userBox}>

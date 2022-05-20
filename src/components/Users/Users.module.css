@@ -43,3 +43,24 @@
     border-radius: 50%;
 }
 
+.pagesBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 5px 12px 5px 5px;
+    width: 200px;
+    margin: 0 auto 50px;
+    border: 1px solid rgba(0,1,1, .1);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.numberPage {
+    margin-right: 5px;
+}
+
+.activeNumberPage {
+    margin-right: 5px;
+    font-weight: bold;
+}
+
