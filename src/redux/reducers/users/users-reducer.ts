@@ -1,10 +1,12 @@
+export type PhotosUserType = {
+    small: null | string
+    large: null | string
+}
+
 export type UsersTestType = {
     name: string
     id: number
-    photos: {
-        small: null | string
-        large: null | string
-    }
+    photos: PhotosUserType
     status: null | string
     followed: boolean
 }
@@ -17,11 +19,11 @@ export type UsersPageType = {
     isFetching: boolean
 }
 
-export type UsersActionsType = ReturnType<typeof changeFollowedAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof changeCurrentPageAC>
-    | ReturnType<typeof setTotalCountAC>
-    | ReturnType<typeof toggleIsFetchingAC>;
+export type UsersActionsType = ReturnType<typeof changeFollowed>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof changeCurrentPage>
+    | ReturnType<typeof setTotalCount>
+    | ReturnType<typeof toggleIsFetching>;
 
 const SET_USERS = 'SET-USERS';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
@@ -61,7 +63,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
     }
 }
 
-export const changeFollowedAC = (userId: number) => {
+export const changeFollowed = (userId: number) => {
     return {
         type: CHANGE_FOLLOWED,
         payload: {
@@ -70,7 +72,7 @@ export const changeFollowedAC = (userId: number) => {
     } as const
 }
 
-export const setUsersAC = (users: Array<UsersTestType>) => {
+export const setUsers = (users: Array<UsersTestType>) => {
     return {
         type: SET_USERS,
         payload: {
@@ -79,7 +81,7 @@ export const setUsersAC = (users: Array<UsersTestType>) => {
     } as const
 }
 
-export const changeCurrentPageAC = (pageNumber: number) => {
+export const changeCurrentPage = (pageNumber: number) => {
     return {
         type: CHANGE_CURRENT_PAGE,
         payload: {
@@ -88,7 +90,7 @@ export const changeCurrentPageAC = (pageNumber: number) => {
     } as const
 }
 
-export const setTotalCountAC = (totalCount: number) => {
+export const setTotalCount = (totalCount: number) => {
     return {
         type: SET_TOTAL_COUNT,
         payload: {
@@ -97,7 +99,7 @@ export const setTotalCountAC = (totalCount: number) => {
     } as const
 }
 
-export const toggleIsFetchingAC = (isFetching: boolean) => {
+export const toggleIsFetching = (isFetching: boolean) => {
     return {
         type : TOGGLE_IS_FETCHING,
         payload: {
@@ -105,3 +107,4 @@ export const toggleIsFetchingAC = (isFetching: boolean) => {
         }
     } as const
 }
+

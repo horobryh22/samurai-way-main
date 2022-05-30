@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPosts.module.css';
-import {Post, PostType} from './Post/Post';
+import {Post} from './Post/Post';
 import {MapDispatchPropsType, MapStatePropsType} from './MyPostsContainer';
 
 type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType;
