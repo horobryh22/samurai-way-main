@@ -4,7 +4,8 @@ import {dialogsReducer} from './reducers/dialogs/dialogs-reducer';
 import {navbarReducer} from './reducers/navbar/navbar-reducer';
 import {usersReducer} from './reducers/users/users-reducer';
 
-export type StateType = ReturnType<typeof rootReducer>
+export type StateType = ReturnType<typeof rootReducer>;
+type StoreType = typeof store;
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -14,5 +15,6 @@ const rootReducer = combineReducers({
 })
 
 export const store = createStore(rootReducer, {});
+
 
 
