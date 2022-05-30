@@ -4,7 +4,7 @@ import {
     changeCurrentPageAC,
     changeFollowedAC,
     setTotalCountAC,
-    setUsersAC,
+    setUsersAC, toggleIsFetchingAC,
     UsersActionsType,
     UsersPageType,
     UsersTestType,
@@ -12,6 +12,7 @@ import {
 import React from 'react';
 import {Users} from './Users';
 import axios, {AxiosResponse} from 'axios';
+import {Preloader} from '../common/Preloader/Preloader';
 
 export type MapStatePropsType = {
     usersPage: UsersPageType
@@ -22,6 +23,7 @@ export type MapDispatchPropsType = {
     setTotalCount: (totalCount: number) => void
     setUsers: (users: Array<UsersTestType>) => void
     changeCurrentPage: (pageNumber: number) => void
+    toggleIsFetching: (isFetching: boolean) => void
 }
 
 type DataType = {
@@ -35,24 +37,31 @@ type UsersContainerPropsType = MapDispatchPropsType & MapStatePropsType;
 export class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
+        this.props.toggleIsFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersPage.pageSize}&page=${this.props.usersPage.currentPage}`)
             .then((response: AxiosResponse<DataType>) => {
+                this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items);
                 this.props.setTotalCount(response.data.totalCount);
             })
     }
 
     onClickHandler = (p: number) => {
+        this.props.toggleIsFetching(true);
         this.props.changeCurrentPage(p);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersPage.pageSize}&page=${p}`)
             .then((response: AxiosResponse<DataType>) => {
+                this.props.toggleIsFetching(false);
                 this.props.setUsers(response.data.items);
             })
     }
 
     render() {
         return (
-            <Users changeFollowed={this.props.changeFollowed} usersPage={this.props.usersPage}  onClickHandler={this.onClickHandler}/>
+            <>
+                {this.props.usersPage.isFetching && <Preloader/>}
+                <Users changeFollowed={this.props.changeFollowed} usersPage={this.props.usersPage}  onClickHandler={this.onClickHandler}/>
+            </>
         );
     }
 }
@@ -76,6 +85,9 @@ const mapDispatchToProps = (dispatch: (action: UsersActionsType) => void): MapDi
         },
         setTotalCount: (totalCount: number) => {
             dispatch(setTotalCountAC(totalCount));
+        },
+        toggleIsFetching: (isFetching: boolean) => {
+            dispatch(toggleIsFetchingAC(isFetching));
         }
     }
 }

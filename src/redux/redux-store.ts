@@ -5,7 +5,6 @@ import {navbarReducer} from './reducers/navbar/navbar-reducer';
 import {usersReducer} from './reducers/users/users-reducer';
 
 export type StateType = ReturnType<typeof rootReducer>;
-type StoreType = typeof store;
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,

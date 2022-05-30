@@ -1,15 +1,7 @@
 import React from 'react';
 import classes from './Users.module.css';
-import {MapDispatchPropsType, MapStatePropsType} from './UsersContainer';
-import axios, {AxiosResponse} from 'axios';
-import {UsersPageType, UsersTestType} from '../../redux/reducers/users/users-reducer';
+import {UsersPageType} from '../../redux/reducers/users/users-reducer';
 import avatar from '../../assets/images/default-avatar.jpeg'
-
-type DataType = {
-    error: null | string
-    items: Array<UsersTestType>
-    totalCount: number
-}
 
 type UsersPropsType = {
     usersPage: UsersPageType
