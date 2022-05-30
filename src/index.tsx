@@ -6,17 +6,12 @@ import {store} from './redux/redux-store';
 import {Provider} from 'react-redux';
 
 
-export const rerenderEntireTree = () => {
-    ReactDOM.render(
-        <Provider store={store}>
-            <App/>,
-        </Provider>,
-        document.getElementById('root')
-    );
-}
+ReactDOM.render(
+    <Provider store={store}>
+        <App/>,
+    </Provider>,
+    document.getElementById('root')
+);
 
 //store.addPost.bind(store) - означает, что мы нашему методу, принадлежащему объекту store, делаем четкую привязку к этому объекту с помощью метода bind и теперь всегда, когда мы будем вызывать этот объект даже без точки, он будет вызываться в контексте вызова нашего store.
-
-store.subscribe(rerenderEntireTree)
-rerenderEntireTree();
 

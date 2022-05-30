@@ -13,6 +13,12 @@ import {Users} from './Users';
 import axios, {AxiosResponse} from 'axios';
 import {Preloader} from '../common/Preloader/Preloader';
 
+type DataType = {
+    error: null | string
+    items: Array<UsersTestType>
+    totalCount: number
+}
+
 export type MapStatePropsType = {
     users: Array<UsersTestType>
     pageSize: number
@@ -21,21 +27,13 @@ export type MapStatePropsType = {
     isFetching: boolean
 }
 
-export type MapDispatchPropsType = {
+type UsersContainerPropsType = MapStatePropsType & {
     changeFollowed: (userId: number) => void
     setTotalCount: (totalCount: number) => void
     setUsers: (users: Array<UsersTestType>) => void
     changeCurrentPage: (pageNumber: number) => void
     toggleIsFetching: (isFetching: boolean) => void
-}
-
-type DataType = {
-    error: null | string
-    items: Array<UsersTestType>
-    totalCount: number
-}
-
-type UsersContainerPropsType = MapDispatchPropsType & MapStatePropsType;
+};
 
 export class UsersContainer extends React.Component<UsersContainerPropsType> {
 
