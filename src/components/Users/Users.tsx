@@ -2,10 +2,8 @@ import React from 'react';
 import classes from './Users.module.css';
 import {MapDispatchPropsType, MapStatePropsType} from './UsersContainer';
 import axios, {AxiosResponse} from 'axios';
-import {UsersTestType} from '../../redux/reducers/users/users-reducer';
+import {UsersPageType, UsersTestType} from '../../redux/reducers/users/users-reducer';
 import avatar from '../../assets/images/default-avatar.jpeg'
-
-export type UsersPropsType = MapDispatchPropsType & MapStatePropsType;
 
 type DataType = {
     error: null | string
@@ -13,26 +11,42 @@ type DataType = {
     totalCount: number
 }
 
-export const Users: React.FC<UsersPropsType> = ({usersPage, changeFollowed, setUsers}) => {
+type UsersPropsType = {
+    usersPage: UsersPageType
+    changeFollowed: (userId: number) => void
+    onClickHandler: (p: number) => void
+}
 
-    const getUsers = () => {
-        if (usersPage.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users?count=5&page=1')
-                .then((response: AxiosResponse<DataType>) => {
-                    setUsers(response.data.items);
-                })
-        }
+export const Users: React.FC<UsersPropsType> = ({usersPage, changeFollowed, onClickHandler}) => {
+
+    const pagesCount = Math.ceil(usersPage.usersCount / usersPage.pageSize);
+    const pages = [];
+
+    for (let i = 0; i < pagesCount; i++) {
+        pages[i] = i + 1
     }
+
+    const mappedPages = pages.map(p => {
+        return (
+            <div
+                className={usersPage.currentPage === p ? classes.activeNumberPage : classes.numberPage}
+                onClick={() => onClickHandler(p)}
+            >{p}</div>
+        )
+    });
 
     return (
         <div className={classes.userPage}>
-            <button onClick={getUsers}>Get Users</button>
+            <div className={classes.pagesBox}>
+                {mappedPages}
+            </div>
             {usersPage.users.map(u => {
                 return (
                     <div key={u.id} className={classes.userBox}>
                         <div className={classes.leftBox}>
-                            <img src={u.photos.small ? u.photos.small : avatar} alt='avatar'/>
-                            <button onClick={() => changeFollowed(u.id)}>{u.followed ? 'Unfollowed' : 'Followed'}</button>
+                            <img src={u.photos.small ? u.photos.small : avatar} alt="avatar"/>
+                            <button
+                                onClick={() => changeFollowed(u.id)}>{u.followed ? 'Unfollowed' : 'Followed'}</button>
                         </div>
                         <div className={classes.rightBox}>
                             <div className={classes.topRightBox}>
