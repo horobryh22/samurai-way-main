@@ -1,4 +1,4 @@
-// import {changeFollowedAC, setUsersAC, UsersPageType, usersReducer} from './users-reducer';
+// import {changeFollowedAC, setUsersAC, UsersPageType, authReducer} from './users-reducer';
 //
 //
 // let initialState: UsersPageType
@@ -47,7 +47,7 @@
 //
 // test('The property followed from users should be changed', () => {
 //
-//     const newState = usersReducer(initialState, changeFollowedAC(1));
+//     const newState = authReducer(initialState, changeFollowedAC(1));
 //
 //     expect(newState.users[0].followed).toBe(false);
 //     expect(newState.users[1].followed).toBe(false);
@@ -71,7 +71,7 @@
 //         },
 //     ]
 //
-//     const newState = usersReducer(initialState, setUsersAC(newUsers));
+//     const newState = authReducer(initialState, setUsersAC(newUsers));
 //
 //     expect(newState.users.length).toBe(4);
 //     expect(newState.users[3]).toBe(newUsers[0])
@@ -106,7 +106,7 @@
 //         },
 //     ]
 //
-//     const newState = usersReducer(initialState, setUsersAC(newUsers));
+//     const newState = authReducer(initialState, setUsersAC(newUsers));
 //
 //     expect(newState.users.length).toBe(2);
 //     expect(newState.users[1]).toBe(newUsers[1])

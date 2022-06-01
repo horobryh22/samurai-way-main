@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Users.module.css';
-import {UsersPageType, UsersTestType} from '../../redux/reducers/users/users-reducer';
+import {UsersTestType} from '../../redux/reducers/users/users-reducer';
 import avatar from '../../assets/images/default-avatar.jpeg'
 import {NavLink} from 'react-router-dom';
 

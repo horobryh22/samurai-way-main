@@ -4,4 +4,15 @@
 
 .descriptionBlock {
     padding: 10px;
+    display: flex;
+}
+
+.descriptionBlock img {
+    width: 250px;
+    margin-right: 30px;
+}
+
+.userName {
+    font-size: 25px;
+    font-weight: 600;
 }
