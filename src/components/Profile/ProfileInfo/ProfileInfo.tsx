@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './ProfileInfo.module.css'
-import {UserProfileType} from '../../../redux/reducers/profile/profile-reducer';
 import avatar from '../../../assets/images/default-avatar.jpeg'
+import {UserProfileType} from '../../../api/api';
 
 
 type ProfileInfoPropsType = {

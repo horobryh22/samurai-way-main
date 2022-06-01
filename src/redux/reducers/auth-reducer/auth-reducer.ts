@@ -1,4 +1,5 @@
-import {UserProfileType} from '../profile/profile-reducer';
+import {UserProfileType} from '../../../api/api';
+
 
 export type AuthActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<typeof setCurrentAuthUserAC>;
 export type AuthUserStateType = typeof initialState;

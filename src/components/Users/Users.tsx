@@ -3,8 +3,7 @@ import classes from './Users.module.css';
 import {UsersTestType} from '../../redux/reducers/users/users-reducer';
 import avatar from '../../assets/images/default-avatar.jpeg'
 import {NavLink} from 'react-router-dom';
-import axios, {AxiosResponse} from 'axios';
-import {ResponseDataType} from '../Header/HeaderContainer';
+import {followStatus, ResponseDataType} from '../../api/api';
 
 type UsersPropsType = {
     usersCount: number
@@ -57,22 +56,18 @@ export const Users: React.FC<UsersPropsType> = ({
                                 onClick={() => {
 
                                     if (!u.followed) {
-                                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {withCredentials: true, headers: {
-                                            'API-KEY': 'd73ac9ac-03b0-4f3d-b9fd-ef31da93967f'
-                                            }})
-                                            .then((response: AxiosResponse<ResponseDataType>) => {
-                                                if (!response.data.resultCode) {
+                                        followStatus.addUserToFriends(u.id)
+                                            .then((data: ResponseDataType) => {
+                                                if (!data.resultCode) {
                                                     changeFollowed(u.id);
                                                 }
                                             })
                                     }
 
                                     if (u.followed) {
-                                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,  {withCredentials: true, headers: {
-                                                'API-KEY': 'd73ac9ac-03b0-4f3d-b9fd-ef31da93967f'
-                                            }})
-                                            .then((response: AxiosResponse<ResponseDataType>) => {
-                                                if (!response.data.resultCode) {
+                                        followStatus.removeUserFromFriends(u.id)
+                                            .then((data: ResponseDataType) => {
+                                                if (!data.resultCode) {
                                                     changeFollowed(u.id);
                                                 }
                                             })

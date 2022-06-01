@@ -1,5 +1,5 @@
 import {PostType} from '../../../components/Profile/MyPosts/Post/Post';
-import {PhotosUserType} from '../users/users-reducer';
+import {UserProfileType} from '../../../api/api';
 
 export type ContactsUserType = {
     facebook: string | null
@@ -12,15 +12,7 @@ export type ContactsUserType = {
     mainLink: string | null
 }
 
-export type UserProfileType = {
-    aboutMe: string | null
-    contacts: ContactsUserType
-    lookingForAJob: boolean
-    lookingForAJobDescription: string | null
-    fullName: string | null
-    userId: number,
-    photos: PhotosUserType
-}
+
 
 export type ProfilePageType = typeof initialState;
 

@@ -2,34 +2,28 @@ import React from 'react';
 import {Header} from './Header';
 import {connect} from 'react-redux';
 import {StateType} from '../../redux/redux-store';
-import {UserProfileType} from '../../redux/reducers/profile/profile-reducer';
 import {
     AuthActionsType,
     AuthUserDataType,
     setAuthUserDataAC,
     setCurrentAuthUserAC
 } from '../../redux/reducers/auth-reducer/auth-reducer';
-import axios, {AxiosResponse} from 'axios';
+import {ResponseDataType, userAuth, userProfile, UserProfileType} from '../../api/api';
 
 export type HeaderComponentPropsType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
-export type ResponseDataType = {
-    data: AuthUserDataType
-    fieldsErrors: Array<any>
-    messages: Array<any>
-    resultCode: number
-}
+
 
 class HeaderContainer extends React.Component<HeaderComponentPropsType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {withCredentials: true})
-            .then((response: AxiosResponse<ResponseDataType>) => {
-                if (!response.data.resultCode) {
-                    this.props.setAuthUserData(response.data.data);
-                    const id = response.data.data.id
-                    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`, {withCredentials: true})
-                        .then((response: AxiosResponse<UserProfileType>) => {
-                            this.props.setCurrentAuthUser(response.data);
+        userAuth.becomeAuthUser()
+            .then((data: ResponseDataType) => {
+                if (!data.resultCode) {
+                    this.props.setAuthUserData(data.data);
+                    const id = data.data.id
+                    userProfile.getUserProfile(id)
+                        .then((data: UserProfileType) => {
+                            this.props.setCurrentAuthUser(data);
                         })
                 }
             })

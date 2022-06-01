@@ -10,14 +10,8 @@ import {
 } from '../../redux/reducers/users/users-reducer';
 import React from 'react';
 import {Users} from './Users';
-import axios, {AxiosResponse} from 'axios';
 import {Preloader} from '../common/Preloader/Preloader';
-
-type DataType = {
-    error: null | string
-    items: Array<UsersTestType>
-    totalCount: number
-}
+import {DataType, users} from '../../api/api';
 
 export type MapStatePropsType = {
     users: Array<UsersTestType>
@@ -39,21 +33,21 @@ export class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {withCredentials: true})
-            .then((response: AxiosResponse<DataType>) => {
+        users.getUsers(this.props.pageSize, this.props.currentPage)
+            .then((data: DataType) => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items);
-                this.props.setTotalCount(response.data.totalCount);
+                this.props.setUsers(data.items);
+                this.props.setTotalCount(data.totalCount);
             })
     }
 
     onClickHandler = (p: number) => {
         this.props.toggleIsFetching(true);
         this.props.changeCurrentPage(p);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`, {withCredentials: true})
-            .then((response: AxiosResponse<DataType>) => {
+        users.getUsers(this.props.pageSize, p)
+            .then((data: DataType) => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items);
+                this.props.setUsers(data.items);
             })
     }
 
@@ -83,28 +77,6 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
         isFetching: state.usersPage.isFetching
     }
 }
-
-// const mapDispatchToProps = (dispatch: (action: UsersActionsType) => void): MapDispatchPropsType => {
-//     return {
-//         changeFollowed: (userId: number) => {
-//             dispatch(changeFollowedAC(userId));
-//         },
-//         setUsers: (users: Array<UsersTestType>) => {
-//             dispatch(setUsersAC(users));
-//         },
-//         changeCurrentPage: (pageNumber: number) => {
-//             dispatch(changeCurrentPageAC(pageNumber))
-//         },
-//         setTotalCount: (totalCount: number) => {
-//             dispatch(setTotalCountAC(totalCount));
-//         },
-//         toggleIsFetching: (isFetching: boolean) => {
-//             dispatch(toggleIsFetchingAC(isFetching));
-//         }
-//     }
-// }
-
-// мы переписали наш код короче, избавились от функции mapDispatchToProps  и теперь вместо нее передаем объект с нашими экшн креэйторами, а уже внутри себя функция коннект оборачивает их колбэками и посути ничего не меняется, просто уменьшаем наш код.
 
 export default connect(mapStateToProps, {
     changeFollowed,
