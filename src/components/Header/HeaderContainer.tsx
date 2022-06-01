@@ -12,7 +12,7 @@ import {
 import axios, {AxiosResponse} from 'axios';
 
 export type HeaderComponentPropsType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
-type ResponseDataType = {
+export type ResponseDataType = {
     data: AuthUserDataType
     fieldsErrors: Array<any>
     messages: Array<any>
@@ -27,7 +27,7 @@ class HeaderContainer extends React.Component<HeaderComponentPropsType> {
                 if (!response.data.resultCode) {
                     this.props.setAuthUserData(response.data.data);
                     const id = response.data.data.id
-                    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
+                    axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`, {withCredentials: true})
                         .then((response: AxiosResponse<UserProfileType>) => {
                             this.props.setCurrentAuthUser(response.data);
                         })

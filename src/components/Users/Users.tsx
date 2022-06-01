@@ -3,6 +3,8 @@ import classes from './Users.module.css';
 import {UsersTestType} from '../../redux/reducers/users/users-reducer';
 import avatar from '../../assets/images/default-avatar.jpeg'
 import {NavLink} from 'react-router-dom';
+import axios, {AxiosResponse} from 'axios';
+import {ResponseDataType} from '../Header/HeaderContainer';
 
 type UsersPropsType = {
     usersCount: number
@@ -52,7 +54,32 @@ export const Users: React.FC<UsersPropsType> = ({
                                 <img src={u.photos.small ? u.photos.small : avatar} alt="avatar"/>
                             </NavLink>
                             <button
-                                onClick={() => changeFollowed(u.id)}>{u.followed ? 'Unfollowed' : 'Followed'}</button>
+                                onClick={() => {
+
+                                    if (!u.followed) {
+                                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {withCredentials: true, headers: {
+                                            'API-KEY': 'd73ac9ac-03b0-4f3d-b9fd-ef31da93967f'
+                                            }})
+                                            .then((response: AxiosResponse<ResponseDataType>) => {
+                                                if (!response.data.resultCode) {
+                                                    changeFollowed(u.id);
+                                                }
+                                            })
+                                    }
+
+                                    if (u.followed) {
+                                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,  {withCredentials: true, headers: {
+                                                'API-KEY': 'd73ac9ac-03b0-4f3d-b9fd-ef31da93967f'
+                                            }})
+                                            .then((response: AxiosResponse<ResponseDataType>) => {
+                                                if (!response.data.resultCode) {
+                                                    changeFollowed(u.id);
+                                                }
+                                            })
+                                    }
+
+
+                                }}>{u.followed ? 'Unfollowed' : 'Followed'}</button>
                         </div>
                         <div className={classes.rightBox}>
                             <div className={classes.topRightBox}>
