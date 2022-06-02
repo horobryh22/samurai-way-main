@@ -17,26 +17,30 @@ export type UsersPageType = {
     usersCount: number
     currentPage: number
     isFetching: boolean
+    isChangingFollowStatus: Array<number>
 }
 
 export type UsersActionsType = ReturnType<typeof changeFollowed>
     | ReturnType<typeof setUsers>
     | ReturnType<typeof changeCurrentPage>
     | ReturnType<typeof setTotalCount>
-    | ReturnType<typeof toggleIsFetching>;
+    | ReturnType<typeof toggleIsFetching>
+    | ReturnType<typeof toggleChangingFollowStatus>;
 
 const SET_USERS = 'SET-USERS';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
 const CHANGE_FOLLOWED = 'CHANGE-FOLLOWED';
 const CHANGE_CURRENT_PAGE = 'CHANGE-CURRENT-PAGE';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
+const TOGGLE_CHANGING_FOLLOW_STATUS = 'TOGGLE-CHANGING-FOLLOW-STATUS';
 
 const initialState: UsersPageType = {
     users: [],
     pageSize: 5,
     usersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    isChangingFollowStatus: []
 }
 
 export const usersReducer = (state: UsersPageType = initialState, action: UsersActionsType): UsersPageType => {
@@ -58,6 +62,13 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
             return {...state, usersCount: action.payload.totalCount}
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.payload.isFetching}
+        case TOGGLE_CHANGING_FOLLOW_STATUS:
+            return {
+                ...state,
+                isChangingFollowStatus: action.payload.isChanging
+                    ? [...state.isChangingFollowStatus, action.payload.id]
+                    : state.isChangingFollowStatus.filter(id => id !== action.payload.id)
+            }
         default:
             return state;
     }
@@ -104,6 +115,16 @@ export const toggleIsFetching = (isFetching: boolean) => {
         type : TOGGLE_IS_FETCHING,
         payload: {
             isFetching
+        }
+    } as const
+}
+
+export const toggleChangingFollowStatus = (isChanging: boolean, id: number) => {
+    return {
+        type : TOGGLE_CHANGING_FOLLOW_STATUS,
+        payload: {
+            isChanging,
+            id
         }
     } as const
 }

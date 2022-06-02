@@ -4,7 +4,7 @@ import {
     changeCurrentPage,
     changeFollowed,
     setTotalCount,
-    setUsers,
+    setUsers, toggleChangingFollowStatus,
     toggleIsFetching,
     UsersTestType,
 } from '../../redux/reducers/users/users-reducer';
@@ -19,14 +19,16 @@ export type MapStatePropsType = {
     usersCount: number
     currentPage: number
     isFetching: boolean
+    isChangingFollowStatus: Array<number>
 }
 
-type UsersContainerPropsType = MapStatePropsType & {
+export type UsersContainerPropsType = MapStatePropsType & {
     changeFollowed: (userId: number) => void
     setTotalCount: (totalCount: number) => void
     setUsers: (users: Array<UsersTestType>) => void
     changeCurrentPage: (pageNumber: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    toggleChangingFollowStatus: (isChanging: boolean, id: number) => void
 };
 
 export class UsersContainer extends React.Component<UsersContainerPropsType> {
@@ -56,11 +58,7 @@ export class UsersContainer extends React.Component<UsersContainerPropsType> {
             <>
                 {this.props.isFetching && <Preloader/>}
                 <Users
-                    changeFollowed={this.props.changeFollowed}
-                    users={this.props.users}
-                    currentPage={this.props.currentPage}
-                    pageSize={this.props.pageSize}
-                    usersCount={this.props.usersCount}
+                    {...this.props}
                     onClickHandler={this.onClickHandler}
                 />
             </>
@@ -74,7 +72,8 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         usersCount: state.usersPage.usersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        isChangingFollowStatus: state.usersPage.isChangingFollowStatus
     }
 }
 
@@ -83,5 +82,6 @@ export default connect(mapStateToProps, {
     setUsers,
     changeCurrentPage,
     setTotalCount,
-    toggleIsFetching
+    toggleIsFetching,
+    toggleChangingFollowStatus
 })(UsersContainer);
