@@ -61,9 +61,11 @@ export const Users: React.FC<UsersPropsType> = React.memo(({
                                             followStatus.addUserToFriends(u.id)
                                                 .then((data: ResponseDataType) => {
                                                     if (!data.resultCode) {
-                                                        changeFollowed(u.id);
-                                                        toggleChangingFollowStatus(false, u.id);
+                                                        changeFollowed(u.id)
                                                     }
+                                                })
+                                                .finally(() => {
+                                                    toggleChangingFollowStatus(false, u.id);
                                                 })
                                         }
 
@@ -72,8 +74,10 @@ export const Users: React.FC<UsersPropsType> = React.memo(({
                                                 .then((data: ResponseDataType) => {
                                                     if (!data.resultCode) {
                                                         changeFollowed(u.id);
-                                                        toggleChangingFollowStatus(false, u.id);
                                                     }
+                                                })
+                                                .finally(() => {
+                                                    toggleChangingFollowStatus(false, u.id);
                                                 })
                                         }
 

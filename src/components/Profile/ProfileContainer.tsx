@@ -14,17 +14,15 @@ export type ProfileContainerPropsType = MapStateToProps & MapDispatchToProps & R
 
 export class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
-    componentDidMount() {
-        let userId = this.props.match.params.userId;
-
-        if (!userId) {
-            userId = '24040';
+    async componentDidMount() {
+        try {
+            const userId = this.props.match.params.userId ? this.props.match.params.userId : '24040';
+            const profile = await userProfile.getUserProfile(Number(userId));
+            this.props.setUserProfile(profile);
+        } catch (e) {
+            const err = e as Error;
+            console.error('ProfileContainer: ' + err.message);
         }
-
-        userProfile.getUserProfile(Number(userId))
-            .then((data: UserProfileType) => {
-                this.props.setUserProfile(data);
-            })
     }
 
     render() {

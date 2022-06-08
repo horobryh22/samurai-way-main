@@ -35,30 +35,40 @@ const instance = axios.create({
 })
 
 export const users = {
-    getUsers: (pageSize: number, currentPage: number): Promise<DataType> => {
-        return instance.get(`users?count=${pageSize}&page=${currentPage}`).then(response => response.data);
+    getUsers: async (pageSize: number, currentPage: number): Promise<DataType> => {
+        const response = await instance.get(`users`, {
+            params: {
+                count: pageSize,
+                page: currentPage
+            }
+        });
+        return response.data;
     }
 }
 
 export const userProfile = {
-    getUserProfile: (id: number): Promise<UserProfileType> => {
-        return instance.get(`profile/${id}`).then(response => response.data);
+    getUserProfile: async (id: number): Promise<UserProfileType> => {
+        const response = await instance.get(`profile/${id}`);
+        return response.data;
     }
 }
 
 export const userAuth = {
-    becomeAuthUser: (): Promise<ResponseDataType> => {
-        return instance.get(`auth/me`).then(response => response.data);
+    becomeAuthUser: async (): Promise<ResponseDataType> => {
+        const response = await instance.get(`auth/me`);
+        return response.data;
     }
 }
 
 
 export const followStatus = {
-    addUserToFriends: (id: number): Promise<ResponseDataType> => {
-        return instance.post(`/follow/${id}`).then(response => response.data);
+    addUserToFriends: async (id: number): Promise<ResponseDataType> => {
+        const response = await instance.post(`/follow/${id}`);
+        return response.data;
     },
-    removeUserFromFriends: (id: number): Promise<ResponseDataType> => {
-        return instance.delete(`/follow/${id}`).then(response => response.data);
+    removeUserFromFriends: async (id: number): Promise<ResponseDataType> => {
+        const response = await instance.delete(`/follow/${id}`)
+        return response.data;
     }
 }
 

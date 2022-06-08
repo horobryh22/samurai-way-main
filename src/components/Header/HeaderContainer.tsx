@@ -8,25 +8,24 @@ import {
     setAuthUserDataAC,
     setCurrentAuthUserAC
 } from '../../redux/reducers/auth-reducer/auth-reducer';
-import {ResponseDataType, userAuth, userProfile, UserProfileType} from '../../api/api';
+import {userAuth, userProfile, UserProfileType} from '../../api/api';
 
 export type HeaderComponentPropsType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 
 class HeaderContainer extends React.Component<HeaderComponentPropsType> {
 
-    componentDidMount() {
-        userAuth.becomeAuthUser()
-            .then((data: ResponseDataType) => {
-                if (!data.resultCode) {
-                    this.props.setAuthUserData(data.data);
-                    const id = data.data.id
-                    userProfile.getUserProfile(id)
-                        .then((data: UserProfileType) => {
-                            this.props.setCurrentAuthUser(data);
-                        })
-                }
-            })
+    async componentDidMount() {
+        try {
+            const data = await userAuth.becomeAuthUser();
+            this.props.setAuthUserData(data.data);
+            const profile = await userProfile.getUserProfile(data.data.id);
+            this.props.setCurrentAuthUser(profile);
+        } catch (e) {
+            const err = e as Error;
+            console.error('HeaderContainer: ' + err.message);
+        }
+
     }
 
     render() {

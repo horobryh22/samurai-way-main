@@ -4,14 +4,15 @@ import {
     changeCurrentPage,
     changeFollowed,
     setTotalCount,
-    setUsers, toggleChangingFollowStatus,
+    setUsers,
+    toggleChangingFollowStatus,
     toggleIsFetching,
     UsersTestType,
 } from '../../redux/reducers/users/users-reducer';
 import React from 'react';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
-import {DataType, users} from '../../api/api';
+import {users} from '../../api/api';
 
 export type MapStatePropsType = {
     users: Array<UsersTestType>
@@ -33,24 +34,31 @@ export type UsersContainerPropsType = MapStatePropsType & {
 
 export class UsersContainer extends React.Component<UsersContainerPropsType> {
 
-    componentDidMount() {
-        this.props.toggleIsFetching(true);
-        users.getUsers(this.props.pageSize, this.props.currentPage)
-            .then((data: DataType) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items);
-                this.props.setTotalCount(data.totalCount);
-            })
+    async componentDidMount() {
+        try {
+            this.props.toggleIsFetching(true);
+            const usersData = await users.getUsers(this.props.pageSize, this.props.currentPage);
+            this.props.toggleIsFetching(false);
+            this.props.setUsers(usersData.items);
+            this.props.setTotalCount(usersData.totalCount);
+        } catch (e) {
+            const err = e as Error;
+            console.error('UsersContainer: ' + err.message);
+        }
     }
 
-    onClickHandler = (p: number) => {
-        this.props.toggleIsFetching(true);
-        this.props.changeCurrentPage(p);
-        users.getUsers(this.props.pageSize, p)
-            .then((data: DataType) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(data.items);
-            })
+    onClickHandler = async (p: number) => {
+        try {
+            this.props.toggleIsFetching(true);
+            this.props.changeCurrentPage(p);
+            const usersData = await users.getUsers(this.props.pageSize, p);
+            this.props.toggleIsFetching(false);
+            this.props.setUsers(usersData.items);
+        } catch (e) {
+            const err = e as Error;
+            console.error('Users - onClickHandler: ' + err.message);
+        }
+
     }
 
     render() {
