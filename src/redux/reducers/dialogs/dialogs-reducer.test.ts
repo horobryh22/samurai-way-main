@@ -1,8 +1,8 @@
 import {
-    changeValueMessageActionCreator,
+    changeValueMessageAC,
     DialogsPageType,
     dialogsReducer,
-    sendMessageActionCreator
+    sendMessageAC
 } from './dialogs-reducer';
 
 
@@ -57,7 +57,7 @@ beforeEach(() => {
 
 test('The valueTextarea should be changing', () => {
 
-    const newState = dialogsReducer(initialState, changeValueMessageActionCreator(value));
+    const newState = dialogsReducer(initialState, changeValueMessageAC(value));
 
     expect(newState.messageText).toBe(value);
     expect(newState).not.toBe(initialState);
@@ -67,7 +67,7 @@ test('The message should be sending', () => {
 
     initialState.messageText = value;
 
-    const newState = dialogsReducer(initialState, sendMessageActionCreator());
+    const newState = dialogsReducer(initialState, sendMessageAC());
 
     expect(newState.messageText).toBe('');
     expect(newState.messages[0].id).toBe(5);

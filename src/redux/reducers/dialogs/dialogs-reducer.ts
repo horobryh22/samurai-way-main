@@ -2,7 +2,7 @@ import {DialogItemType} from '../../../components/Dialogs/DialogItem/DialogItem'
 import {MessageType} from '../../../components/Dialogs/Message/Message';
 
 export type DialogsPageType = typeof initialState;
-export type DialogsActionsType = ReturnType<typeof sendMessageActionCreator> | ReturnType<typeof changeValueMessageActionCreator>;
+export type DialogsActionsType = ReturnType<typeof sendMessageAC> | ReturnType<typeof changeValueMessageAC>;
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
 const CHANGE_VALUE_TEXTAREA_MESSAGE = 'CHANGE-VALUE-TEXTAREA-MESSAGE';
@@ -63,7 +63,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Di
     }
 }
 
-export const sendMessageActionCreator = () => ({type: SEND_MESSAGE} as const);
+export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
 
-export const changeValueMessageActionCreator = (valueMessage: string) =>
+export const changeValueMessageAC = (valueMessage: string) =>
     ({type: CHANGE_VALUE_TEXTAREA_MESSAGE, valueMessage} as const);

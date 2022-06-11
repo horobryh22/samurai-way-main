@@ -1,3 +1,6 @@
+import {followStatus, users} from '../../../api/api';
+import {AppDispatch} from '../../redux-store';
+
 export type PhotosUserType = {
     small: null | string
     large: null | string
@@ -20,12 +23,12 @@ export type UsersPageType = {
     isChangingFollowStatus: Array<number>
 }
 
-export type UsersActionsType = ReturnType<typeof changeFollowed>
-    | ReturnType<typeof setUsers>
-    | ReturnType<typeof changeCurrentPage>
-    | ReturnType<typeof setTotalCount>
-    | ReturnType<typeof toggleIsFetching>
-    | ReturnType<typeof toggleChangingFollowStatus>;
+export type UsersActionsType = ReturnType<typeof changeFollowedAC>
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof changeCurrentPageAC>
+    | ReturnType<typeof setTotalCountAC>
+    | ReturnType<typeof toggleIsFetchingAC>
+    | ReturnType<typeof toggleChangingFollowStatusAC>;
 
 const SET_USERS = 'SET-USERS';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
@@ -74,7 +77,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
     }
 }
 
-export const changeFollowed = (userId: number) => {
+export const changeFollowedAC = (userId: number) => {
     return {
         type: CHANGE_FOLLOWED,
         payload: {
@@ -83,7 +86,7 @@ export const changeFollowed = (userId: number) => {
     } as const
 }
 
-export const setUsers = (users: Array<UsersTestType>) => {
+export const setUsersAC = (users: Array<UsersTestType>) => {
     return {
         type: SET_USERS,
         payload: {
@@ -92,7 +95,7 @@ export const setUsers = (users: Array<UsersTestType>) => {
     } as const
 }
 
-export const changeCurrentPage = (pageNumber: number) => {
+export const changeCurrentPageAC = (pageNumber: number) => {
     return {
         type: CHANGE_CURRENT_PAGE,
         payload: {
@@ -101,7 +104,7 @@ export const changeCurrentPage = (pageNumber: number) => {
     } as const
 }
 
-export const setTotalCount = (totalCount: number) => {
+export const setTotalCountAC = (totalCount: number) => {
     return {
         type: SET_TOTAL_COUNT,
         payload: {
@@ -110,22 +113,57 @@ export const setTotalCount = (totalCount: number) => {
     } as const
 }
 
-export const toggleIsFetching = (isFetching: boolean) => {
+export const toggleIsFetchingAC = (isFetching: boolean) => {
     return {
-        type : TOGGLE_IS_FETCHING,
+        type: TOGGLE_IS_FETCHING,
         payload: {
             isFetching
         }
     } as const
 }
 
-export const toggleChangingFollowStatus = (isChanging: boolean, id: number) => {
+export const toggleChangingFollowStatusAC = (isChanging: boolean, id: number) => {
     return {
-        type : TOGGLE_CHANGING_FOLLOW_STATUS,
+        type: TOGGLE_CHANGING_FOLLOW_STATUS,
         payload: {
             isChanging,
             id
         }
     } as const
+}
+
+export const getUsersTC = (pageSize: number, currentPage: number) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(toggleIsFetchingAC(true));
+        const usersData = await users.getUsers(pageSize, currentPage);
+        dispatch(toggleIsFetchingAC(false));
+        dispatch(setUsersAC(usersData.items));
+        dispatch(setTotalCountAC(usersData.totalCount));
+    } catch (e) {
+        const err = e as Error;
+        console.error('getUsers: ' + err.message);
+    }
+
+}
+
+export const changeFollowStatusTC = (id: number, followedStatus: boolean) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(toggleChangingFollowStatusAC(true, id));
+
+        if (!followedStatus) {
+            const data = await followStatus.addUserToFriends(id);
+            if (!data.resultCode) dispatch(changeFollowedAC(id));
+        }
+
+        if (followedStatus) {
+            const data = await followStatus.removeUserFromFriends(id);
+            if (!data.resultCode) dispatch(changeFollowedAC(id));
+        }
+
+        dispatch(toggleChangingFollowStatusAC(false, id));
+    } catch (e) {
+        const err = e as Error;
+        console.error('changeFollowStatus: ' + err.message);
+    }
 }
 

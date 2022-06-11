@@ -1,6 +1,6 @@
 import {
-    addPostActionCreator,
-    changeValuePostActionCreator,
+    addPostAC,
+    changeValuePostAC,
     ProfilePageType,
     profileReducer,
     setUserProfileAC
@@ -29,7 +29,7 @@ beforeEach(() => {
 
 test('The valueTextarea should be changing and the post should be sending', () => {
 
-    const newState = profileReducer(initialState, changeValuePostActionCreator(valuePost));
+    const newState = profileReducer(initialState, changeValuePostAC(valuePost));
 
     expect(newState.postText).toBe(valuePost);
 
@@ -39,7 +39,7 @@ test('The post should be sending', () => {
 
     initialState.postText = valuePost;
 
-    const newState = profileReducer(initialState, addPostActionCreator());
+    const newState = profileReducer(initialState, addPostAC());
 
     expect(newState.postText).toBe('');
     expect(newState.posts.length).toBe(3);

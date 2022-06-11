@@ -60,7 +60,6 @@ export const userAuth = {
     }
 }
 
-
 export const followStatus = {
     addUserToFriends: async (id: number): Promise<ResponseDataType> => {
         const response = await instance.post(`/follow/${id}`);

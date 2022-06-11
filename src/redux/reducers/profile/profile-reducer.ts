@@ -17,8 +17,8 @@ export type ContactsUserType = {
 export type ProfilePageType = typeof initialState;
 
 export type ProfileActionsType =
-    ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof changeValuePostActionCreator>
+    ReturnType<typeof addPostAC>
+    | ReturnType<typeof changeValuePostAC>
     | ReturnType<typeof setUserProfileAC>;
 
 const ADD_POST = 'ADD-POST';
@@ -53,7 +53,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST} as const);
+export const addPostAC = () => ({type: ADD_POST} as const);
 export const setUserProfileAC = (profile: UserProfileType) => ({type: SET_USER_PROFILE, payload: {profile}} as const)
-export const changeValuePostActionCreator = (valuePost: string) =>
+export const changeValuePostAC = (valuePost: string) =>
     ({type: CHANGE_VALUE_TEXTAREA_POST, valuePost} as const);

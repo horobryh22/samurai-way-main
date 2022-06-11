@@ -25,7 +25,6 @@ class HeaderContainer extends React.Component<HeaderComponentPropsType> {
             const err = e as Error;
             console.error('HeaderContainer: ' + err.message);
         }
-
     }
 
     render() {

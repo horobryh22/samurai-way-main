@@ -1,18 +1,14 @@
 import {connect} from 'react-redux';
-import {StateType} from '../../redux/redux-store';
+import {AppDispatch, StateType} from '../../redux/redux-store';
 import {
-    changeCurrentPage,
-    changeFollowed,
-    setTotalCount,
-    setUsers,
-    toggleChangingFollowStatus,
-    toggleIsFetching,
+    changeCurrentPageAC,
+    changeFollowStatusTC,
+    getUsersTC,
     UsersTestType,
 } from '../../redux/reducers/users/users-reducer';
 import React from 'react';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
-import {users} from '../../api/api';
 
 export type MapStatePropsType = {
     users: Array<UsersTestType>
@@ -23,42 +19,27 @@ export type MapStatePropsType = {
     isChangingFollowStatus: Array<number>
 }
 
-export type UsersContainerPropsType = MapStatePropsType & {
-    changeFollowed: (userId: number) => void
-    setTotalCount: (totalCount: number) => void
-    setUsers: (users: Array<UsersTestType>) => void
+export type MapDispatchToProps = {
     changeCurrentPage: (pageNumber: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
-    toggleChangingFollowStatus: (isChanging: boolean, id: number) => void
-};
+    getUsers: (pageSize: number, currentPage: number) => void
+    changeFollowStatus: (id: number, followedStatus: boolean) => void
+}
+
+export type UsersContainerPropsType = MapStatePropsType & MapDispatchToProps;
 
 export class UsersContainer extends React.Component<UsersContainerPropsType> {
 
-    async componentDidMount() {
-        try {
-            this.props.toggleIsFetching(true);
-            const usersData = await users.getUsers(this.props.pageSize, this.props.currentPage);
-            this.props.toggleIsFetching(false);
-            this.props.setUsers(usersData.items);
-            this.props.setTotalCount(usersData.totalCount);
-        } catch (e) {
-            const err = e as Error;
-            console.error('UsersContainer: ' + err.message);
-        }
+    componentDidMount() {
+        this.props.getUsers(this.props.pageSize, this.props.currentPage);
     }
 
-    onClickHandler = async (p: number) => {
-        try {
-            this.props.toggleIsFetching(true);
-            this.props.changeCurrentPage(p);
-            const usersData = await users.getUsers(this.props.pageSize, p);
-            this.props.toggleIsFetching(false);
-            this.props.setUsers(usersData.items);
-        } catch (e) {
-            const err = e as Error;
-            console.error('Users - onClickHandler: ' + err.message);
-        }
+    onClickHandler = (p: number) => {
+        this.props.changeCurrentPage(p);
+        this.props.getUsers(this.props.pageSize, p);
+    }
 
+    componentWillUnmount() {
+        this.props.changeCurrentPage(1);
     }
 
     render() {
@@ -85,11 +66,19 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
     }
 }
 
-export default connect(mapStateToProps, {
-    changeFollowed,
-    setUsers,
-    changeCurrentPage,
-    setTotalCount,
-    toggleIsFetching,
-    toggleChangingFollowStatus
-})(UsersContainer);
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+    return {
+        changeCurrentPage: (pageNumber: number) => {
+            dispatch(changeCurrentPageAC(pageNumber));
+        },
+        getUsers: async (pageSize: number, currentPage: number) => {
+            await dispatch(getUsersTC(pageSize, currentPage));
+        },
+        changeFollowStatus: async (id: number, followedStatus: boolean) => {
+            await dispatch(changeFollowStatusTC(id, followedStatus));
+        }
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);

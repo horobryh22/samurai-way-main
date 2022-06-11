@@ -1,9 +1,9 @@
 import {
-    changeCurrentPage,
-    changeFollowed,
-    setTotalCount,
-    setUsers, toggleChangingFollowStatus,
-    toggleIsFetching,
+    changeCurrentPageAC,
+    changeFollowedAC,
+    setTotalCountAC,
+    setUsersAC, toggleChangingFollowStatusAC,
+    toggleIsFetchingAC,
     UsersPageType,
     usersReducer
 } from './users-reducer';
@@ -48,7 +48,7 @@ beforeEach(() => {
 
 test('The property followed from users should be changed', () => {
 
-    const newState = usersReducer(initialState, changeFollowed(1));
+    const newState = usersReducer(initialState, changeFollowedAC(1));
 
     expect(newState.users[0].followed).toBe(true);
     expect(newState.users[1].followed).toBe(false);
@@ -70,7 +70,7 @@ test('New users should be added inside initialState.users', () => {
         }
     ]
 
-    const newState = usersReducer(initialState, setUsers(newUsers));
+    const newState = usersReducer(initialState, setUsersAC(newUsers));
 
     expect(newState.users.length).toBe(1);
     expect(newState.users[0]).toEqual({
@@ -102,7 +102,7 @@ test('If users from Initial State are empty, new Users also should be added', ()
         }
     ]
 
-    const newState = usersReducer(initialState, setUsers(users));
+    const newState = usersReducer(initialState, setUsersAC(users));
 
     expect(newState.users.length).toBe(1);
     expect(newState.users[0]).toEqual(users[0]);
@@ -110,14 +110,14 @@ test('If users from Initial State are empty, new Users also should be added', ()
 
 test('current page should be change', () => {
 
-    const newState = usersReducer(initialState, changeCurrentPage(10));
+    const newState = usersReducer(initialState, changeCurrentPageAC(10));
 
     expect(newState.currentPage).toBe(10);
 })
 
 test ('Total count of users should be added to state', () => {
 
-    const newState = usersReducer(initialState, setTotalCount(100000));
+    const newState = usersReducer(initialState, setTotalCountAC(100000));
 
     expect(newState.usersCount).toBe(100000);
 
@@ -125,7 +125,7 @@ test ('Total count of users should be added to state', () => {
 
 test ('Property "isFetching" should be changed on changing state of request to server', () => {
 
-    const newState = usersReducer(initialState, toggleIsFetching(true));
+    const newState = usersReducer(initialState, toggleIsFetchingAC(true));
 
     expect(newState.isFetching).toBe(true);
 
@@ -133,13 +133,13 @@ test ('Property "isFetching" should be changed on changing state of request to s
 
 test ('Property "isChangingFollowStatus" should be changing on changing state of request to server', () => {
 
-    const stateFirst = usersReducer(initialState, toggleChangingFollowStatus(true, 1));
-    const stateSecond = usersReducer(stateFirst, toggleChangingFollowStatus(true, 2));
+    const stateFirst = usersReducer(initialState, toggleChangingFollowStatusAC(true, 1));
+    const stateSecond = usersReducer(stateFirst, toggleChangingFollowStatusAC(true, 2));
 
     expect(stateSecond.isChangingFollowStatus.length).toBe(2);
     expect(stateSecond.isChangingFollowStatus).toEqual([1, 2]);
 
-    const stateThird = usersReducer(stateSecond, toggleChangingFollowStatus(false, 1));
+    const stateThird = usersReducer(stateSecond, toggleChangingFollowStatusAC(false, 1));
 
     expect(stateThird.isChangingFollowStatus.length).toBe(1);
     expect(stateThird.isChangingFollowStatus).toEqual([2]);

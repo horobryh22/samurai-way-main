@@ -1,8 +1,8 @@
 import {MessageType} from '../components/Dialogs/Message/Message';
 import {PostType} from '../components/Profile/MyPosts/Post/Post';
 import {DialogItemType} from '../components/Dialogs/DialogItem/DialogItem';
-import {addPostActionCreator, changeValuePostActionCreator, profileReducer} from './reducers/profile/profile-reducer';
-import {changeValueMessageActionCreator, dialogsReducer, sendMessageActionCreator} from './reducers/dialogs/dialogs-reducer';
+import {addPostAC, changeValuePostAC, profileReducer} from './reducers/profile/profile-reducer';
+import {changeValueMessageAC, dialogsReducer, sendMessageAC} from './reducers/dialogs/dialogs-reducer';
 import {navbarReducer} from './reducers/navbar/navbar-reducer';
 
 
