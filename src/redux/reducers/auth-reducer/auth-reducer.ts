@@ -1,4 +1,5 @@
-import {UserProfileType} from '../../../api/api';
+import {userAuth, userProfile, UserProfileType} from '../../../api/api';
+import {AppDispatch} from '../../redux-store';
 
 
 export type AuthActionsType = ReturnType<typeof setAuthUserDataAC> | ReturnType<typeof setCurrentAuthUserAC>;
@@ -18,7 +19,7 @@ const initialState = {
     isAuth: false
 }
 
-export const authReducer = (state:AuthUserStateType = initialState, action: AuthActionsType):AuthUserStateType => {
+export const authReducer = (state: AuthUserStateType = initialState, action: AuthActionsType): AuthUserStateType => {
     switch (action.type) {
         case SET_AUTH_USER_DATA:
             return <AuthUserStateType>{...state, userData: {...action.payload}, isAuth: true}
@@ -44,6 +45,18 @@ export const setCurrentAuthUserAC = (data: UserProfileType) => {
         payload: {
             ...data
         }
+    }
+}
+
+export const getCurrentAuthUserProfileTC = () => async (dispatch: AppDispatch) => {
+    try {
+        const data = await userAuth.becomeAuthUser();
+        dispatch(setAuthUserDataAC(data.data));
+        const profile = await userProfile.getUserProfile(data.data.id);
+        dispatch(setCurrentAuthUserAC(profile));
+    } catch (e) {
+        const err = e as Error;
+        console.error('getCurrentAuthUserProfile: ' + err.message);
     }
 }
 

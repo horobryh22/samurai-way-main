@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom';
 import avatar from '../../../assets/images/default-avatar.jpeg';
 
 type UserPropsType = {
-    id: number
+    userId: number
     photo: string | null
     name: string
     status: string | null
@@ -13,7 +13,7 @@ type UserPropsType = {
     changeFollowStatus: (id: number, followedStatus: boolean) => void
 }
 export const User: React.FC<UserPropsType> = ({
-                                                  id,
+                                                  userId,
                                                   photo,
                                                   isChangingFollowStatus,
                                                   followed,
@@ -23,14 +23,14 @@ export const User: React.FC<UserPropsType> = ({
                                               }) => {
 
     return (
-        <div key={id} className={classes.userBox}>
+        <div key={userId} className={classes.userBox}>
             <div className={classes.leftBox}>
-                <NavLink to={`/profile/${id}`}>
+                <NavLink to={`/profile/${userId}`}>
                     <img src={photo ? photo : avatar} alt="avatar"/>
                 </NavLink>
                 <button
-                    disabled={isChangingFollowStatus.some(id => id === id)}
-                    onClick={() => changeFollowStatus(id, followed)}
+                    disabled={isChangingFollowStatus.some(id => id === userId)}
+                    onClick={() => changeFollowStatus(userId, followed)}
                 >{followed ? 'Unfollowed' : 'Followed'}</button>
             </div>
             <div className={classes.rightBox}>

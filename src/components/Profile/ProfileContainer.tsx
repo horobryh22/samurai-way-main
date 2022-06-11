@@ -1,10 +1,9 @@
 import React from 'react';
-import {ProfileActionsType, setUserProfileAC} from '../../redux/reducers/profile/profile-reducer';
+import {getUserProfileTC} from '../../redux/reducers/profile/profile-reducer';
 import {connect} from 'react-redux';
-import {StateType} from '../../redux/redux-store';
+import {AppDispatch, StateType} from '../../redux/redux-store';
 import {Profile} from './Profile';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {userProfile, UserProfileType} from '../../api/api';
 
 type PathParamsType = {
     userId: string,
@@ -14,15 +13,9 @@ export type ProfileContainerPropsType = MapStateToProps & MapDispatchToProps & R
 
 export class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
-    async componentDidMount() {
-        try {
-            const userId = this.props.match.params.userId ? this.props.match.params.userId : '24040';
-            const profile = await userProfile.getUserProfile(Number(userId));
-            this.props.setUserProfile(profile);
-        } catch (e) {
-            const err = e as Error;
-            console.error('ProfileContainer: ' + err.message);
-        }
+    componentDidMount() {
+        const userId = this.props.match.params.userId ? this.props.match.params.userId : '24040';
+        this.props.getUserProfile(userId);
     }
 
     render() {
@@ -41,10 +34,10 @@ export const mapStateToProps = (state: StateType) => {
     } as const
 };
 
-export const mapDispatchToProps = (dispatch: (action: ProfileActionsType) => void) => {
+export const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        setUserProfile: (profile: UserProfileType) => {
-            dispatch(setUserProfileAC(profile));
+        getUserProfile: (userId: string) => {
+            dispatch(getUserProfileTC(userId));
         }
     } as const
 }

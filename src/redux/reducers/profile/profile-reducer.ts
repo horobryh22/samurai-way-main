@@ -1,5 +1,6 @@
 import {PostType} from '../../../components/Profile/MyPosts/Post/Post';
-import {UserProfileType} from '../../../api/api';
+import {userProfile, UserProfileType} from '../../../api/api';
+import {AppDispatch} from '../../redux-store';
 
 export type ContactsUserType = {
     facebook: string | null
@@ -57,3 +58,13 @@ export const addPostAC = () => ({type: ADD_POST} as const);
 export const setUserProfileAC = (profile: UserProfileType) => ({type: SET_USER_PROFILE, payload: {profile}} as const)
 export const changeValuePostAC = (valuePost: string) =>
     ({type: CHANGE_VALUE_TEXTAREA_POST, valuePost} as const);
+
+export const getUserProfileTC = (userId: string) => async (dispatch: AppDispatch) => {
+    try {
+        const profile = await userProfile.getUserProfile(Number(userId));
+        dispatch(setUserProfileAC(profile));
+    } catch (e) {
+        const err = e as Error;
+        console.error('getUserProfile: ' + err.message);
+    }
+}

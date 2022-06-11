@@ -42,7 +42,7 @@ export const Users: React.FC<UsersPropsType> = React.memo(({
                     return (
                         <User
                             key={u.id}
-                            id={u.id}
+                            userId={u.id}
                             followed={u.followed}
                             name={u.name}
                             status={u.status}
