@@ -10,8 +10,6 @@ type ProfileInfoPropsType = {
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({userProfile}) => {
 
-    console.log(userProfile);
-
     return (
         <div>
             <div>

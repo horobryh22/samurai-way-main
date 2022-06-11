@@ -1,5 +1,5 @@
-import {followStatus, users} from '../../../api/api';
 import {AppDispatch} from '../../redux-store';
+import {usersAPI} from '../../../api/api';
 
 export type PhotosUserType = {
     small: null | string
@@ -135,7 +135,7 @@ export const toggleChangingFollowStatusAC = (isChanging: boolean, id: number) =>
 export const getUsersTC = (pageSize: number, currentPage: number) => async (dispatch: AppDispatch) => {
     try {
         dispatch(toggleIsFetchingAC(true));
-        const usersData = await users.getUsers(pageSize, currentPage);
+        const usersData = await usersAPI.getUsers(pageSize, currentPage);
         dispatch(toggleIsFetchingAC(false));
         dispatch(setUsersAC(usersData.items));
         dispatch(setTotalCountAC(usersData.totalCount));
@@ -151,12 +151,12 @@ export const changeFollowStatusTC = (id: number, followedStatus: boolean) => asy
         dispatch(toggleChangingFollowStatusAC(true, id));
 
         if (!followedStatus) {
-            const data = await followStatus.addUserToFriends(id);
+            const data = await usersAPI.changeFollowStatus(id, 'post');
             if (!data.resultCode) dispatch(changeFollowedAC(id));
         }
 
         if (followedStatus) {
-            const data = await followStatus.removeUserFromFriends(id);
+            const data = await usersAPI.changeFollowStatus(id, 'delete');
             if (!data.resultCode) dispatch(changeFollowedAC(id));
         }
 

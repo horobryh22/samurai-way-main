@@ -1,5 +1,5 @@
 import {PostType} from '../../../components/Profile/MyPosts/Post/Post';
-import {userProfile, UserProfileType} from '../../../api/api';
+import {UserProfileType, usersAPI} from '../../../api/api';
 import {AppDispatch} from '../../redux-store';
 
 export type ContactsUserType = {
@@ -61,7 +61,7 @@ export const changeValuePostAC = (valuePost: string) =>
 
 export const getUserProfileTC = (userId: string) => async (dispatch: AppDispatch) => {
     try {
-        const profile = await userProfile.getUserProfile(Number(userId));
+        const profile = await usersAPI.getUserProfile(Number(userId));
         dispatch(setUserProfileAC(profile));
     } catch (e) {
         const err = e as Error;

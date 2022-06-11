@@ -3,6 +3,8 @@ import {PhotosUserType, UsersTestType} from '../redux/reducers/users/users-reduc
 import {AuthUserDataType} from '../redux/reducers/auth-reducer/auth-reducer';
 import {ContactsUserType} from '../redux/reducers/profile/profile-reducer';
 
+export type RequestType = 'post' | 'delete';
+
 export type DataType = {
     error: null | string
     items: Array<UsersTestType>
@@ -34,7 +36,14 @@ const instance = axios.create({
     }
 })
 
-export const users = {
+export const authAPI = {
+    becomeAuthUser: async (): Promise<ResponseDataType> => {
+        const response = await instance.get(`auth/me`);
+        return response.data;
+    }
+}
+
+export const usersAPI = {
     getUsers: async (pageSize: number, currentPage: number): Promise<DataType> => {
         const response = await instance.get(`users`, {
             params: {
@@ -43,30 +52,13 @@ export const users = {
             }
         });
         return response.data;
-    }
-}
-
-export const userProfile = {
+    },
     getUserProfile: async (id: number): Promise<UserProfileType> => {
         const response = await instance.get(`profile/${id}`);
         return response.data;
-    }
-}
-
-export const userAuth = {
-    becomeAuthUser: async (): Promise<ResponseDataType> => {
-        const response = await instance.get(`auth/me`);
-        return response.data;
-    }
-}
-
-export const followStatus = {
-    addUserToFriends: async (id: number): Promise<ResponseDataType> => {
-        const response = await instance.post(`/follow/${id}`);
-        return response.data;
     },
-    removeUserFromFriends: async (id: number): Promise<ResponseDataType> => {
-        const response = await instance.delete(`/follow/${id}`)
+    changeFollowStatus: async (id: number, requestType: RequestType): Promise<ResponseDataType> => {
+        const response = await instance[requestType](`/follow/${id}`)
         return response.data;
     }
 }
