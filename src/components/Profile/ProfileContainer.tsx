@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {AppDispatch, StateType} from '../../redux/redux-store';
 import {Profile} from './Profile';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type PathParamsType = {
     userId: string,
@@ -30,7 +31,7 @@ type MapDispatchToProps = ReturnType<typeof mapDispatchToProps>
 
 export const mapStateToProps = (state: StateType) => {
     return {
-        userProfile: state.profilePage.userProfile
+        userProfile: state.profilePage.userProfile,
     } as const
 };
 
@@ -44,4 +45,6 @@ export const mapDispatchToProps = (dispatch: AppDispatch) => {
 
 const ProfileComponentWithURLParams = withRouter(ProfileContainer);  //обернули нашу компоненту еще одной контейнерной компонентой, чтобы можно было получить параметры из URL адреса
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileComponentWithURLParams);
+const ProfileWithAuthRedirect = withAuthRedirect(ProfileComponentWithURLParams);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileWithAuthRedirect);
