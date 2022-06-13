@@ -6,9 +6,11 @@ import {
     getUsersTC,
     UsersTestType,
 } from '../../redux/reducers/users/users-reducer';
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {compose} from 'redux';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 export type MapStatePropsType = {
     users: Array<UsersTestType>
@@ -81,4 +83,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default compose<ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect)
+(UsersContainer)

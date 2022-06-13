@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {getUserProfileTC} from '../../redux/reducers/profile/profile-reducer';
 import {connect} from 'react-redux';
 import {AppDispatch, StateType} from '../../redux/redux-store';
 import {Profile} from './Profile';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 type PathParamsType = {
-    userId: string,
+    userId: string
 }
 
 export type ProfileContainerPropsType = MapStateToProps & MapDispatchToProps & RouteComponentProps<PathParamsType>;
@@ -43,8 +44,8 @@ export const mapDispatchToProps = (dispatch: AppDispatch) => {
     } as const
 }
 
-const ProfileComponentWithURLParams = withRouter(ProfileContainer);  //обернули нашу компоненту еще одной контейнерной компонентой, чтобы можно было получить параметры из URL адреса
-
-const ProfileWithAuthRedirect = withAuthRedirect(ProfileComponentWithURLParams);
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileWithAuthRedirect);
+export default compose<ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
+    withAuthRedirect,
+)(ProfileContainer) // нашу целевую компоненту Profile оборачиваем еще тремя HOC, чтобы расширить вомзонжости нашей презентационной компоненты

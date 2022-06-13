@@ -1,7 +1,7 @@
 import React, {ComponentType} from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {AppDispatch, StateType} from '../redux/redux-store';
+import {StateType} from '../redux/redux-store';
 
 type RedirectComponentPropsType = ReturnType<typeof mapStateToProps>
 
