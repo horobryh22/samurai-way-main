@@ -47,5 +47,5 @@ export const mapDispatchToProps = (dispatch: AppDispatch) => {
 export default compose<ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
     withRouter,
-    withAuthRedirect,
+    // withAuthRedirect,
 )(ProfileContainer) // нашу целевую компоненту Profile оборачиваем еще тремя HOC, чтобы расширить вомзонжости нашей презентационной компоненты
