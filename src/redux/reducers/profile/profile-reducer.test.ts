@@ -21,7 +21,8 @@ beforeEach(() => {
             {id: 2, post: 'Hello, it is my first posts', likes: 15}
         ] as Array<PostType>,
         postText: '',
-        userProfile: {} as UserProfileType
+        userProfile: {} as UserProfileType,
+        status: ''
     }
 
 })

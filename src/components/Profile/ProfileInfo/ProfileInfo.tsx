@@ -6,18 +6,19 @@ import {ProfileStatus} from './ProfileStatus/ProfileStatus';
 
 
 type ProfileInfoPropsType = {
+    updateUserStatus: (status: string) => void
     userProfile: UserProfileType
+    status: string
 }
 
-export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({userProfile}) => {
-
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({userProfile, status, updateUserStatus}) => {
     return (
         <>
             <div className={classes.descriptionBlock}>
                 <img src={userProfile.photos?.large ? userProfile.photos.large : avatar} alt=""/>
                 <div className={classes.userName}>{userProfile.fullName}</div>
             </div>
-            <ProfileStatus status={'Hello'}/>
+            <ProfileStatus status={status} updateUserStatus={updateUserStatus}/>
         </>
     );
 };

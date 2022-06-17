@@ -1,4 +1,4 @@
-import {authAPI, UserProfileType, usersAPI} from '../../../api/api';
+import {authAPI, profileAPI, UserProfileType, usersAPI} from '../../../api/api';
 import {AppDispatch} from '../../redux-store';
 
 
@@ -38,7 +38,7 @@ export const setCurrentAuthUserAC = (data: UserProfileType) => {
 export const getCurrentAuthUserProfileTC = () => async (dispatch: AppDispatch) => {
     try {
         const data = await authAPI.becomeAuthUser();
-        const profile = await usersAPI.getUserProfile(data.data.id);
+        const profile = await profileAPI.getUserProfile(data.data.id);
         dispatch(setCurrentAuthUserAC(profile));
     } catch (e) {
         const err = e as Error;

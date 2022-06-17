@@ -1,5 +1,5 @@
 import {AppDispatch} from '../../redux-store';
-import {usersAPI} from '../../../api/api';
+import {profileAPI, usersAPI} from '../../../api/api';
 
 export type PhotosUserType = {
     small: null | string
@@ -149,14 +149,13 @@ export const getUsersTC = (pageSize: number, currentPage: number) => async (disp
 export const changeFollowStatusTC = (id: number, followedStatus: boolean) => async (dispatch: AppDispatch) => {
     try {
         dispatch(toggleChangingFollowStatusAC(true, id));
-
         if (!followedStatus) {
-            const data = await usersAPI.changeFollowStatus(id, 'post');
+            const data = await profileAPI.changeFollowStatus(id, 'post');
             if (!data.resultCode) dispatch(changeFollowedAC(id));
         }
 
         if (followedStatus) {
-            const data = await usersAPI.changeFollowStatus(id, 'delete');
+            const data = await profileAPI.changeFollowStatus(id, 'delete');
             if (!data.resultCode) dispatch(changeFollowedAC(id));
         }
 
