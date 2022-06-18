@@ -18,12 +18,17 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType, Profi
         status: this.props.status
     }
 
+    componentDidUpdate = (prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<ProfileStatusStateType>, snapshot?: any) => {
+        if (this.props.status !== prevProps.status) {
+            this.setState({status: this.props.status});
+        }
+    }
+
     toggleEditMode = () => {
         this.setState({
             editMode: !this.state.editMode
         });
         if (this.state.editMode) {
-            debugger;
             this.props.updateUserStatus(this.state.status);
         }
     }

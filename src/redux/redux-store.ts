@@ -4,7 +4,8 @@ import {dialogsReducer} from './reducers/dialogs/dialogs-reducer';
 import {navbarReducer} from './reducers/navbar/navbar-reducer';
 import {usersReducer} from './reducers/users/users-reducer';
 import {authReducer} from './reducers/auth-reducer/auth-reducer';
-import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
+import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form';
 
 export type StateType = ReturnType<typeof rootReducer>;
 
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     navbar: navbarReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 })
 
 export const store = createStore(rootReducer, {}, applyMiddleware(thunkMiddleware));
