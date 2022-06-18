@@ -6,7 +6,7 @@ import {NavLink} from 'react-router-dom';
 
 export type HeaderPropsType = HeaderComponentPropsType;
 
-export const Header: React.FC<HeaderPropsType> = ({isAuth, currentAuthUser}) => {
+export const Header: React.FC<HeaderPropsType> = ({isAuth, currentAuthUser, logOut}) => {
 
     return (
         <header className={classes.header}>
@@ -15,8 +15,11 @@ export const Header: React.FC<HeaderPropsType> = ({isAuth, currentAuthUser}) => 
                 alt="logo"/>
             {isAuth
                 ? <div className={classes.userDataBlock}>
-                    <div className={classes.userName}>{currentAuthUser.fullName}</div>
                     <img src={currentAuthUser.photos?.small ? currentAuthUser.photos.small : avatar} alt=""/>
+                    <div className={classes.userName}>{currentAuthUser.fullName}</div>
+                    <div className={classes.loginBlock}>
+                        <NavLink to={'/login'}>LogOut</NavLink>
+                    </div>
                 </div>
                 : <div className={classes.loginBlock}>
                     <NavLink to={'/login'}>LogIn</NavLink>

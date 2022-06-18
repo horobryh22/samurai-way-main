@@ -16,7 +16,7 @@ export type ProfileContainerPropsType = MapStateToProps & MapDispatchToProps & R
 export class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
-        const userId = this.props.match.params.userId ? this.props.match.params.userId : '24040';
+        const userId = this.props.match.params.userId ? this.props.match.params.userId : `${this.props.userId}`;
         this.props.getUserProfile(userId);
 
         this.props.getUserStatus(userId);
@@ -35,7 +35,8 @@ type MapDispatchToProps = ReturnType<typeof mapDispatchToProps>
 export const mapStateToProps = (state: StateType) => {
     return {
         userProfile: state.profilePage.userProfile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        userId: state.auth.currentAuthUser.userId
     } as const
 };
 

@@ -1,6 +1,5 @@
 import classes from './Login.module.css';
-import React, {ComponentType} from 'react';
-import {compose} from 'redux';
+import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 export type FormDataType = {

@@ -2,16 +2,12 @@ import React from 'react';
 import {Header} from './Header';
 import {connect} from 'react-redux';
 import {AppDispatch, StateType} from '../../redux/redux-store';
-import {getCurrentAuthUserProfileTC} from '../../redux/reducers/auth-reducer/auth-reducer';
+import {logOutTC} from '../../redux/reducers/auth-reducer/auth-reducer';
 
 export type HeaderComponentPropsType = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 
 class HeaderContainer extends React.Component<HeaderComponentPropsType> {
-
-    componentDidMount() {
-        this.props.getCurrentAuthUserProfile();
-    }
 
     render() {
         return (
@@ -29,8 +25,8 @@ const mapStateToProps = (state: StateType) => {
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        getCurrentAuthUserProfile: () => {
-            dispatch(getCurrentAuthUserProfileTC());
+        logOut: () => {
+            dispatch(logOutTC());
         }
     } as const
 }

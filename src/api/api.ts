@@ -37,8 +37,12 @@ const instance = axios.create({
 })
 
 export const authAPI = {
-    becomeAuthUser: async (): Promise<ResponseDataType> => {
-        const response = await instance.get(`auth/me`);
+    logIn: async (email: string, password: string, rememberMe: boolean): Promise<ResponseDataType> => {
+        const response = await instance.post(`auth/login`, {email, password, rememberMe});
+        return response.data;
+    },
+    logOut: async (): Promise<ResponseDataType> => {
+        const response = await instance.delete(`auth/login`);
         return response.data;
     }
 }
@@ -49,15 +53,15 @@ export const profileAPI = {
         return response.data;
     },
     changeFollowStatus: async (id: number, requestType: RequestType): Promise<ResponseDataType> => {
-        const response = await instance[requestType](`/follow/${id}`)
+        const response = await instance[requestType](`follow/${id}`)
         return response.data;
     },
     getUserStatus: async (id: string): Promise<string> => {
-        const response = await instance.get(`/profile/status/${id}`);
+        const response = await instance.get(`profile/status/${id}`);
         return response.data;
     },
     updateUserStatus: async (status: string): Promise<ResponseDataType> => {
-        const response = await instance.put(`/profile/status`, {status: status});
+        const response = await instance.put(`profile/status`, {status: status});
         return response.data;
     },
 }
