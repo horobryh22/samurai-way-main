@@ -4,12 +4,12 @@ import {
     setTotalCountAC,
     setUsersAC, toggleChangingFollowStatusAC,
     toggleIsFetchingAC,
-    UsersPageType,
+    UsersType,
     usersReducer
 } from './users-reducer';
 
 
-let initialState: UsersPageType
+let initialState: UsersType
 
 beforeEach(() => {
 

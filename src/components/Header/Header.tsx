@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderPropsType> = ({isAuth, currentAuthUser, logO
                     <img src={currentAuthUser.photos?.small ? currentAuthUser.photos.small : avatar} alt=""/>
                     <div className={classes.userName}>{currentAuthUser.fullName}</div>
                     <div className={classes.loginBlock}>
-                        <NavLink to={'/login'}>LogOut</NavLink>
+                        <NavLink to={'/login'} onClick={logOut}>LogOut</NavLink>
                     </div>
                 </div>
                 : <div className={classes.loginBlock}>

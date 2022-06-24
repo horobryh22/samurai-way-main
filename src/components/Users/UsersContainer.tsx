@@ -4,7 +4,7 @@ import {
     changeCurrentPageAC,
     changeFollowStatusTC,
     getUsersTC,
-    UsersTestType,
+    UserDataType,
 } from '../../redux/reducers/users/users-reducer';
 import React, {ComponentType} from 'react';
 import {Users} from './Users';
@@ -13,7 +13,7 @@ import {compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 export type MapStatePropsType = {
-    users: Array<UsersTestType>
+    users: Array<UserDataType>
     pageSize: number
     usersCount: number
     currentPage: number

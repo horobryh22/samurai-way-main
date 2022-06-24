@@ -6,7 +6,7 @@ export type PhotosUserType = {
     large: null | string
 }
 
-export type UsersTestType = {
+export type UserDataType = {
     name: string
     id: number
     photos: PhotosUserType
@@ -14,8 +14,8 @@ export type UsersTestType = {
     followed: boolean
 }
 
-export type UsersPageType = {
-    users: Array<UsersTestType>
+export type UsersType = {
+    users: Array<UserDataType>
     pageSize: number
     usersCount: number
     currentPage: number
@@ -37,7 +37,7 @@ const CHANGE_CURRENT_PAGE = 'CHANGE-CURRENT-PAGE';
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
 const TOGGLE_CHANGING_FOLLOW_STATUS = 'TOGGLE-CHANGING-FOLLOW-STATUS';
 
-const initialState: UsersPageType = {
+const initialState: UsersType = {
     users: [],
     pageSize: 5,
     usersCount: 0,
@@ -46,7 +46,7 @@ const initialState: UsersPageType = {
     isChangingFollowStatus: []
 }
 
-export const usersReducer = (state: UsersPageType = initialState, action: UsersActionsType): UsersPageType => {
+export const usersReducer = (state: UsersType = initialState, action: UsersActionsType): UsersType => {
     switch (action.type) {
         case CHANGE_FOLLOWED:
             const userId = action.payload.userId;
@@ -86,7 +86,7 @@ export const changeFollowedAC = (userId: number) => {
     } as const
 }
 
-export const setUsersAC = (users: Array<UsersTestType>) => {
+export const setUsersAC = (users: Array<UserDataType>) => {
     return {
         type: SET_USERS,
         payload: {
