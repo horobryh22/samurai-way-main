@@ -1,11 +1,16 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import classes from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
 import {MapDispatchPropsType, MapStatePropsType} from './DialogsContainer';
 import TextFieldForm, {TextFormDataType} from '../common/components/TextFieldForm/TextFieldForm';
+import {maxLengthCreator} from '../../utilities/validation/validation';
+import {ElementCreator} from '../../hoc/ElementCreator/ElementCreator';
 
 type DialogsType = MapStatePropsType & MapDispatchPropsType;
+
+const maxLength = maxLengthCreator(10);
+const Textarea = ElementCreator('textarea');
 
 export const Dialogs: React.FC<DialogsType> = ({dialogsPage, sendMessage}) => {
 
@@ -28,7 +33,12 @@ export const Dialogs: React.FC<DialogsType> = ({dialogsPage, sendMessage}) => {
                 <div className={classes.messagesWrapper}>
                     {messages}
                 </div>
-                <TextFieldForm onSubmit={onSubmitHandler}/>
+                <TextFieldForm
+                    name={'Add message'}
+                    onSubmit={onSubmitHandler}
+                    maxLength={maxLength}
+                    component={Textarea}
+                />
             </div>
         </div>
     )

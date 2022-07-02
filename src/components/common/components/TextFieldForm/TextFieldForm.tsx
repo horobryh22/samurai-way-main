@@ -1,20 +1,31 @@
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import React from 'react';
+import {requiredValue} from '../../../../utilities/validation/validation';
 
 export type TextFormDataType = {
     textField: string
 }
 
-const TextFieldForm: React.FC<InjectedFormProps<TextFormDataType>> = ({handleSubmit, }) => {
+type FiledFormPropsType = {
+    name: string
+    maxLength: (value: string) => void
+    component: React.FunctionComponent
+}
+
+const TextFieldForm: React.FC<FiledFormPropsType & InjectedFormProps<TextFormDataType, FiledFormPropsType>> = ({handleSubmit, name, maxLength, component}) => {
     return (
         <form onSubmit={handleSubmit}>
-            <Field component={'textarea'} name={'textField'} placeholder={'Enter your message'}/>
+            <Field
+                component={component}
+                name={'textField'}
+                placeholder={'Enter your message'}
+                validate={[requiredValue, maxLength]}
+            />
             <div>
-                <button>Add</button>
+                <button>{name}</button>
             </div>
         </form>
     )
 }
 
-
-export default reduxForm<TextFormDataType>({form: 'textField'})(TextFieldForm);
+export default reduxForm<TextFormDataType, FiledFormPropsType>({form: 'textField'})(TextFieldForm);
