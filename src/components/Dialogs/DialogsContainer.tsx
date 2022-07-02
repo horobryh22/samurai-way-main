@@ -1,6 +1,5 @@
 import React, {ComponentType} from 'react';
 import {
-    changeValueMessageAC,
     DialogsActionsType, DialogsPageType,
     sendMessageAC
 } from '../../redux/reducers/dialogs/dialogs-reducer';
@@ -16,8 +15,7 @@ export type MapStatePropsType = {
 }
 
 export type MapDispatchPropsType = {
-    sendMessage: () => void
-    changeValueMessage: (valueMessage: string) => void
+    sendMessage: (message: string) => void
 }
 
 const mapStateToProps = (state: StateType): MapStatePropsType => {
@@ -28,8 +26,7 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
 
 const mapStateToDispatch = (dispatch: (action: DialogsActionsType) => void): MapDispatchPropsType => {
     return {
-        sendMessage: () => dispatch(sendMessageAC()),
-        changeValueMessage: (valueMessage: string) => dispatch(changeValueMessageAC(valueMessage))
+        sendMessage: (message: string) => dispatch(sendMessageAC(message)),
     }
 }
 

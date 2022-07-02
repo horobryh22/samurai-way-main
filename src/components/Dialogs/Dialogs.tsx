@@ -3,22 +3,18 @@ import classes from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
 import {MapDispatchPropsType, MapStatePropsType} from './DialogsContainer';
+import TextFieldForm, {TextFormDataType} from '../common/components/TextFieldForm/TextFieldForm';
 
 type DialogsType = MapStatePropsType & MapDispatchPropsType;
 
-export const Dialogs: React.FC<DialogsType> = ({dialogsPage, changeValueMessage, sendMessage}) => {
+export const Dialogs: React.FC<DialogsType> = ({dialogsPage, sendMessage}) => {
 
     const dialogs = dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.avatar}/>);
     const messages = dialogsPage.messages.map(m => <Message key={m.id} message={m.message} id={m.id}/>);
-    const textareaValue = dialogsPage.messageText;
 
-    const onClickButtonHandler = (): void => {
-        sendMessage();
-    }
 
-    const onChangeTextareaHandler = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-        const valueMessage = e.currentTarget.value;
-        changeValueMessage(valueMessage);
+    const onSubmitHandler = ({textField: message}:TextFormDataType) => {
+        sendMessage(message);
     }
 
     return (
@@ -32,14 +28,7 @@ export const Dialogs: React.FC<DialogsType> = ({dialogsPage, changeValueMessage,
                 <div className={classes.messagesWrapper}>
                     {messages}
                 </div>
-                <textarea
-                    placeholder={'Enter your message'}
-                    onChange={onChangeTextareaHandler}
-                    value={textareaValue}
-                />
-                <div>
-                    <button onClick={onClickButtonHandler}>Send Message</button>
-                </div>
+                <TextFieldForm onSubmit={onSubmitHandler}/>
             </div>
         </div>
     )

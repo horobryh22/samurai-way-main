@@ -2,7 +2,7 @@ import React from 'react';
 import {
     ProfileActionsType,
     addPostAC,
-    changeValuePostAC, ProfilePageType
+    ProfilePageType
 } from '../../../redux/reducers/profile/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
@@ -13,8 +13,7 @@ export type MapStatePropsType = {
 }
 
 export type MapDispatchPropsType = {
-    addPost: () => void
-    changeValuePost: (valuePost: string) => void
+    addPost: (message: string) => void
 }
 
 
@@ -26,11 +25,8 @@ const mapStateToProps = (state: StateType): MapStatePropsType => {
 
 const mapDispatchToProps = (dispatch: (action: ProfileActionsType) => void): MapDispatchPropsType => {
     return {
-        addPost: () => {
-            dispatch(addPostAC());
-        },
-        changeValuePost: (valuePost: string) => {
-            dispatch(changeValuePostAC(valuePost));
+        addPost: (message: string) => {
+            dispatch(addPostAC(message));
         }
     }
 }

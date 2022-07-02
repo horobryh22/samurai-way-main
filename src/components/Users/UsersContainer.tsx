@@ -8,7 +8,7 @@ import {
 } from '../../redux/reducers/users/users-reducer';
 import React, {ComponentType} from 'react';
 import {Users} from './Users';
-import {Preloader} from '../common/Preloader/Preloader';
+import {Preloader} from '../common/components/Preloader/Preloader';
 import {compose} from 'redux';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 

@@ -2,10 +2,9 @@ import {DialogItemType} from '../../../components/Dialogs/DialogItem/DialogItem'
 import {MessageType} from '../../../components/Dialogs/Message/Message';
 
 export type DialogsPageType = typeof initialState;
-export type DialogsActionsType = ReturnType<typeof sendMessageAC> | ReturnType<typeof changeValueMessageAC>;
+export type DialogsActionsType = ReturnType<typeof sendMessageAC>
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
-const CHANGE_VALUE_TEXTAREA_MESSAGE = 'CHANGE-VALUE-TEXTAREA-MESSAGE';
 
 const initialState = {
     dialogs: [
@@ -46,24 +45,16 @@ const initialState = {
         {id: 3, message: 'Nice to meet you'},
         {id: 4, message: 'Where are you from?'}
     ] as Array<MessageType>,
-    messageText: ''
 }
 
 export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsActionsType): DialogsPageType => {
 
     switch (action.type) {
         case SEND_MESSAGE:
-            return {...state, messages: [{id: 5, message: state.messageText}, ...state.messages], messageText: ''};
-
-        case CHANGE_VALUE_TEXTAREA_MESSAGE:
-            return {...state, messageText: action.valueMessage}
-
+            return {...state, messages: [{id: 5, message: action.payload.message}, ...state.messages]};
         default:
             return state;
     }
 }
 
-export const sendMessageAC = () => ({type: SEND_MESSAGE} as const);
-
-export const changeValueMessageAC = (valueMessage: string) =>
-    ({type: CHANGE_VALUE_TEXTAREA_MESSAGE, valueMessage} as const);
+export const sendMessageAC = (message: string) => ({type: SEND_MESSAGE, payload: {message}} as const);

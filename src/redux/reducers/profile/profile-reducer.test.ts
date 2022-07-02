@@ -1,6 +1,5 @@
 import {
     addPostAC,
-    changeValuePostAC,
     ProfilePageType,
     profileReducer,
     setUserProfileAC
@@ -20,29 +19,16 @@ beforeEach(() => {
             {id: 1, post: 'Tell me how are you friends?', likes: 10},
             {id: 2, post: 'Hello, it is my first posts', likes: 15}
         ] as Array<PostType>,
-        postText: '',
         userProfile: {} as UserProfileType,
         status: ''
     }
 
 })
 
-
-test('The valueTextarea should be changing and the post should be sending', () => {
-
-    const newState = profileReducer(initialState, changeValuePostAC(valuePost));
-
-    expect(newState.postText).toBe(valuePost);
-
-})
-
 test('The post should be sending', () => {
 
-    initialState.postText = valuePost;
+    const newState = profileReducer(initialState, addPostAC(valuePost));
 
-    const newState = profileReducer(initialState, addPostAC());
-
-    expect(newState.postText).toBe('');
     expect(newState.posts.length).toBe(3);
     expect(newState.posts[0].id).toBe(3);
     expect(newState.posts[0].post).toBe(valuePost);
