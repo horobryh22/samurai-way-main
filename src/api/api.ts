@@ -16,6 +16,12 @@ export type ResponseType<D = {}> = {
     resultCode: number
 }
 
+export type AuthUserDataType = {
+    id: number
+    email: string
+    login: string
+};
+
 export type UserProfileType = {
     aboutMe: string | null
     contacts: ContactsUserType
@@ -35,6 +41,10 @@ const instance = axios.create({
 })
 
 export const authAPI = {
+    me: async (): Promise<ResponseType<AuthUserDataType>> => {
+        const response = await instance.get(`auth/me`);
+        return response.data;
+    },
     logIn: async (email: string, password: string, rememberMe: boolean) => {
         const response = await instance.post<ResponseType<{ userId: number }>>(`auth/login`, {
             email,
