@@ -1,8 +1,8 @@
-import classes from './Login.module.css';
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
-import {ElementCreator} from '../../hoc/ElementCreator/ElementCreator';
-import {maxLengthCreator, requiredValue} from '../../utilities/validation/validation';
+import {ElementCreator} from '../../../hoc/ElementCreator/ElementCreator';
+import {maxLengthCreator, requiredValue} from '../../../utilities/validation/validation';
+import classes from './LoginForm.module.css';
 
 export type FormDataType = {
     login: string
@@ -13,7 +13,8 @@ export type FormDataType = {
 const maxLength = maxLengthCreator(55);
 const Input = ElementCreator('input');
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit}) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+
 
     return (
         <form className={classes.form} onSubmit={handleSubmit}>
@@ -34,6 +35,9 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit}) =>
                 component={Input}
                 name={'rememberMe'}
             />Remember Me
+            {error && <div className={classes.formError}>
+                {error}
+            </div>}
             <button>Login</button>
         </form>
     );

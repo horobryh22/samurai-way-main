@@ -10,7 +10,7 @@ export type HeaderComponentPropsType = ReturnType<typeof mapStateToProps> & Retu
 class HeaderContainer extends React.Component<HeaderComponentPropsType> {
 
     componentDidMount() {
-        this.props.me();
+        this.props.getAuthUserData();
     }
 
     render() {
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         logOut: () => {
             dispatch(logOutTC());
         },
-        me: () => {
+        getAuthUserData: () => {
             dispatch(setAuthUserTC());
         }
     } as const

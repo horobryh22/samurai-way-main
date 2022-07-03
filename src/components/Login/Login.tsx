@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Login.module.css'
-import LoginForm, {FormDataType} from './LoginForm';
+import LoginForm, {FormDataType} from './LoginForm/LoginForm';
 import {connect} from 'react-redux';
 import {AppDispatch, RootState} from '../../redux/redux-store';
 import {logInTC} from '../../redux/reducers/auth-reducer/auth-reducer';

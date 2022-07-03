@@ -1,5 +1,6 @@
 import {authAPI, AuthUserDataType, profileAPI, UserProfileType} from '../../../api/api';
 import {AppDispatch} from '../../redux-store';
+import {stopSubmit} from 'redux-form';
 
 export type AuthActionsType =
     ReturnType<typeof setUserDataAC> |
@@ -91,10 +92,13 @@ export const logInTC = (email: string, password: string, rememberMe: boolean) =>
         const response = await authAPI.logIn(email, password, rememberMe);
         if (!response.resultCode) {
             dispatch(setAuthUserTC());
+        } else {
+            throw new Error (response.messages[0]);
         }
     } catch (e) {
         const err = e as Error;
         console.error('getCurrentAuthUserProfile: ' + err.message);
+        dispatch(stopSubmit('login', {_error: err.message}));
     }
 }
 
