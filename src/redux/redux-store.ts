@@ -6,6 +6,7 @@ import {usersReducer} from './reducers/users/users-reducer';
 import {authReducer} from './reducers/auth-reducer/auth-reducer';
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
+import {appReducer} from './reducers/app-reducer/app-reducer';
 
 export type StateType = ReturnType<typeof rootReducer>;
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     navbar: navbarReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    app: appReducer,
     form: formReducer
 })
 

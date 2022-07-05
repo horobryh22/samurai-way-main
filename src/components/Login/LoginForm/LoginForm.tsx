@@ -15,7 +15,6 @@ const Input = ElementCreator('input');
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
 
-
     return (
         <form className={classes.form} onSubmit={handleSubmit}>
             <Field
