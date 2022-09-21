@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Header.module.css';
 import {HeaderComponentPropsType} from './HeaderContainer';
 import avatar from '../../assets/images/default-avatar.jpeg'
+import logo from '../../assets/images/logo.svg'
 import {NavLink} from 'react-router-dom';
 
 export type HeaderPropsType = HeaderComponentPropsType;
@@ -11,7 +12,7 @@ export const Header: React.FC<HeaderPropsType> = ({isAuth, logOut, authUserProfi
     return (
         <header className={classes.header}>
             <img
-                src="http://demo.foxthemes.net/socialitev2.2/assets/images/logo.png"
+                src={logo}
                 alt="logo"/>
             {isAuth
                 ? <div className={classes.userDataBlock}>

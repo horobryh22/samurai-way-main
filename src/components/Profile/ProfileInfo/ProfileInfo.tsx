@@ -2,7 +2,9 @@ import React from 'react';
 import classes from './ProfileInfo.module.css'
 import avatar from '../../../assets/images/default-avatar.jpeg'
 import {UserProfileType} from '../../../api/api';
-import {ProfileStatus} from './ProfileStatus/ProfileStatus';
+import {
+    ProfileStatusWithHooks
+} from './ProfileStatus/ProfileStatusWithHooks';
 
 
 type ProfileInfoPropsType = {
@@ -18,7 +20,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({userProfile, status
                 <img src={userProfile.photos?.large ? userProfile.photos.large : avatar} alt=""/>
                 <div className={classes.userName}>{userProfile.fullName}</div>
             </div>
-            <ProfileStatus status={status} updateUserStatus={updateUserStatus}/>
+            <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
         </>
     );
 };

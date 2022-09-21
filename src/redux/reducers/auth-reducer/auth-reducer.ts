@@ -83,7 +83,7 @@ export const setAuthUserTC = () => async (dispatch: AppDispatch) => {
         }
     } catch (e) {
         const err = e as Error;
-        console.error('setAuthUserTC: ' + err.message);
+        console.error('setAuthUser: ' + err.message);
     }
 }
 

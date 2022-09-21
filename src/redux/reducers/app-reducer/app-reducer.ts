@@ -1,7 +1,7 @@
 import {AppThunk} from '../../redux-store';
 import {setAuthUserTC} from '../auth-reducer/auth-reducer';
 
-export type AppActionsType = ReturnType<typeof initializeAppAC>
+export type AppActionsType = ReturnType<typeof initializeAppAC>;
 
 export type AuthUserStateType = {
     isAppInitialized: boolean
@@ -9,9 +9,8 @@ export type AuthUserStateType = {
 
 const INITIALIZE_APP = 'INITIALIZE-APP';
 
-
 const initialState: AuthUserStateType = {
-    isAppInitialized: false
+    isAppInitialized: false,
 }
 
 export const appReducer = (state: AuthUserStateType = initialState, action: AppActionsType): AuthUserStateType => {
@@ -30,7 +29,11 @@ export const initializeAppAC = () => {
 }
 
 export const initializeAppTC = (): AppThunk => async (dispatch) => {
-    const result = dispatch(setAuthUserTC());
-    await Promise.all([result]);
-    dispatch(initializeAppAC());
+    try {
+        await dispatch(setAuthUserTC());
+        dispatch(initializeAppAC());
+    } catch (e) {
+        const err = e as Error;
+        console.error('initializeApp: ' + err.message);
+    }
 }

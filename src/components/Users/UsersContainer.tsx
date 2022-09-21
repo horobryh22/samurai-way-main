@@ -10,7 +10,13 @@ import React, {ComponentType} from 'react';
 import {Users} from './Users';
 import {Preloader} from '../common/components/Preloader/Preloader';
 import {compose} from 'redux';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {
+    getCurrentPage,
+    getIsChangingFollowStatus,
+    getIsFetching,
+    getPageSize,
+    getUsersCount, selectUsers
+} from '../../redux/selectors/users-selectors/user-selectors';
 
 export type MapStatePropsType = {
     users: Array<UserDataType>
@@ -45,6 +51,7 @@ export class UsersContainer extends React.Component<UsersContainerPropsType> {
     }
 
     render() {
+        console.log('users rerender')
         return (
             <>
                 {this.props.isFetching && <Preloader/>}
@@ -58,13 +65,14 @@ export class UsersContainer extends React.Component<UsersContainerPropsType> {
 }
 
 const mapStateToProps = (state: StateType): MapStatePropsType => {
+    console.log('mstp users')
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        usersCount: state.usersPage.usersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        isChangingFollowStatus: state.usersPage.isChangingFollowStatus
+        users: selectUsers(state),
+        pageSize: getPageSize(state),
+        usersCount: getUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        isChangingFollowStatus: getIsChangingFollowStatus(state)
     }
 }
 
@@ -81,7 +89,6 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         }
     }
 }
-
 
 export default compose<ComponentType>(
     connect(mapStateToProps, mapDispatchToProps))
